@@ -1,7 +1,7 @@
 <template>
 
 <!-- headings starts-->
-<div class="justify-between gap-1 flex">
+<div class="justify-between gap-1 flex font-['Manrope']">
         <div class="h-[38px] justify-start items-center gap-4 flex">
             <div class="w-8 h-8 relative">
                 <svg class="w-8 h-8 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -14,7 +14,7 @@
 <!-- headings ends-->
 
 <!--- form starts -->
-<div class="relative overflow-x-auto pt-7">
+<div class="relative overflow-x-auto pt-7 font-['Manrope']">
 
         <div class="w-full h-[68px] flex-col justify-start items-start gap-6 inline-flex">
             <div class="self-stretch justify-between items-end inline-flex">
@@ -199,7 +199,7 @@ export default {
             this.$router.push("/transactions");
         },
         submitForm(){
-            axios.post('http://127.0.0.1:8000/api/v1/transaction', 
+            axios.post('transaction', 
                {
                     "customer_id": this.$refs.customer.value,
                     "uid": this.$refs.uId.value,
@@ -230,11 +230,11 @@ export default {
     },
     async mounted() {
         try {
-            const response_customer = await axios.get('http://127.0.0.1:8000/api/v1/customer');
+            const response_customer = await axios.get('customer');
             this.customer = response_customer.data;
-            const response_trader = await axios.get('http://127.0.0.1:8000/api/v1/trader');
+            const response_trader = await axios.get('trader');
             this.trader = response_trader.data;
-            const response_cdrProvider = await axios.get('http://127.0.0.1:8000/api/v1/supplier');
+            const response_cdrProvider = await axios.get('supplier');
             this.cdrProvider = response_cdrProvider.data;
         } 
         catch (error) {
