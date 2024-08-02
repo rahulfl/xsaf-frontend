@@ -1,181 +1,187 @@
 <template>
 
 <!-- headings starts-->
-<div class="justify-between gap-1 flex font-['Manrope']">
-        <div class="h-[38px] justify-start items-center gap-4 flex">
-            <div class="w-8 h-8 relative">
-                <svg class="w-8 h-8 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+<div class="justify-between gap-1 flex font-Manrope font-medium ">
+        <div class="h-[38px] w-[456.5] justify-start items-center gap-[32px] flex text-[#0F0F0F]">
+            <div class="w-[32px] h-[32px] relative">
+                <svg class="w-[32px] h-[32px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16h13M4 16l4-4m-4 4 4 4M20 8H7m13 0-4 4m4-4-4-4"/>
                 </svg>
             </div>
-            <div class="text-stone-950 text-[32px] font-medium font-['Manrope'] leading-[38.40px]">Transactions</div>
+            <div class="text-[32px] ">Transactions</div>
         </div>
 </div>
 <!-- headings ends-->
 
 <!--- form starts -->
-<div class="relative overflow-x-auto pt-7 font-['Manrope']">
-
-        <div class="w-full h-[68px] flex-col justify-start items-start gap-6 inline-flex">
+<div class="relative overflow-x-auto pt-[48px] font-Manrope">
+        <div class="w-full h-[68px] flex-col justify-start items-start gap-[24px] inline-flex">
             <div class="self-stretch justify-between items-end inline-flex">
-                <div class="text-stone-950 text-xl font-medium font-['Manrope'] leading-normal">Add Transactions</div>
-                <div class="justify-start items-center gap-4 flex">
-                    <button @click="goToTransactionsPage" type="button" class="text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Cancel</button>
-                    <button @click="submitForm" type="button" class="focus:outline-none text-white bg-emerald-500 hover:bg-emerald-800 focus:ring-1 focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">Save transaction</button>
+                <div class="text-[#0F0F0F] text-[20px] font-medium font-Manrope leading-normal">Add Transactions</div>
+                <div class="justify-start items-center gap-[16px] flex">
+                    <button @click="goToTransactionsPage" type="button" class="w-[78px] h-[44px] text-[#74797C] bg-[#F8F9FA] border border-[#74797C] hover:bg-[#DDDDDD] focus:ring-4 font-medium text-[14px] rounded-[4px] px-[16px] py-[10px]">Cancel</button>
+                    <button @click="submitForm" type="button" class="w-[143px] h-[44px] text-white text-[14px] bg-[#12B87C] hover:bg-emerald-400 focus:ring-1 font-medium rounded-[4px] text-[14px] px-[16px] py-[10px]">Save transaction</button>
                 </div>
             </div>
             <div class="self-stretch h-[0px] border border-neutral-200"></div>
         </div>       
         
-        <div class="w-[632px] h-[1250px] flex-col justify-start items-start gap-12 p-3 pt-9">
-        
-            <div class="flex-col justify-end items-start gap-4 flex">
-                <div class="h-[87px] flex-col justify-start items-start gap-3 flex">
-                    <label for="customer" class="block text-base font-['Manrope'] font-medium text-gray-900 dark:text-white">Customer</label>
-                    <select id="customer" ref="customer" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[300px] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <div class="w-[632px] h-[1470px] flex-col justify-start items-start pt-[48px] space-y-[48px]">
+            <div class="h-[147px] w-[300px] flex-col justify-end items-start gap-[16px] flex">
+                <div class="h-[87px] flex-col justify-start items-start gap-[12px] flex">
+                    <label for="customer" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F]">Customer</label>
+                    <select id="customer" ref="customer" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] block w-[300px] h-[56px] p-[16px] hover:bg-white focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white">
                             <option selected>Select</option>
                             <option v-for="cust in customer.data" :value="cust.id" :key="cust.id">{{cust.name}}</option>
                     </select>
                 </div>
-                <div class="justify-start items-start inline-flex">
-                    <button type="button" class="text-green-500 bg-white border border-green-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">+ Add new</button>
-                </div>
-            </div>
-            <div class="h-[87px] flex-col justify-start items-start gap-3 flex pt-3">
-                <label for="uId" class="block text-base font-['Manrope'] font-medium text-gray-900 dark:text-white">UID</label>
-                <input type="text" id="uId" ref="uId" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[300px] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="fihd048485jshdkjhf" required />
-            </div>
-            
-
-            <div id="date-range-picker" date-rangepicker datepicker-format="yyyy-mm-dd" class="flex pt-8 gap-8">
-                <div class="relative">
-                    <div class="w-[300px] flex-col justify-start items-start gap-3 inline-flex">
-                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pt-7 pointer-events-none">
-                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
-                            </svg>
+                <div class="justify-start items-start inline-flex ">
+                    <div class="relative">
+                        <div class="absolute inset-y-0 flex items-center pl-[12px] pointer-events-none">
+                            <img class="w-[20px] h-[20px]" src="/public/images/add_green.svg" alt="image description">
                         </div>
-                        <label for="purchaseDate" class="block text-base font-['Manrope'] font-medium text-gray-900 dark:text-white">Purchase date</label>
-                        <input id="purchaseDate" name="purchaseDate" ref="purchaseDate" type="text" datepicker-format="dd-mm-yyyy" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="2024-01-20">
-                    </div>
-                </div>
-                <div class="relative">
-                    <div class="w-[300px] flex-col justify-start items-start gap-3 inline-flex">
-                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pt-7 pointer-events-none">
-                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
-                            </svg>
-                        </div>
-                        <label for="deliveryDate" class="block text-base font-['Manrope'] pr-48 font-medium text-gray-900 dark:text-white">Delivery date</label>
-                        <input id="deliveryDate" name="deliveryDate" ref="deliveryDate" type="text" datepicker-format="dd-mm-yyyy" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="2024-01-22">
-                    </div>
+                        <button @click="" type="button" class="w-[112px] h-[44px] text-[#12B87C] bg-[#F8F9FA] border border-[#12B87C] focus:outline-none focus:ring-0 focus:ring-[#12B87C] font-medium text-[14px] py-[10px] pl-[12px] rounded-[4px] hover:bg-green-100">Add new</button>
+                    </div> 
                 </div>
             </div>
 
-            <div class="self-stretch justify-start items-start gap-8 inline-flex pt-8">
-                <div class="w-[300px] flex-col justify-start items-start gap-3 inline-flex">
-                        <label for="fuel" class="block text-base font-['Manrope'] font-medium text-gray-900 dark:text-white">Fuel</label>
-                        <input type="text" id="fuel" ref="fuel" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="kerosene" required />
-                </div>
-                <div class="w-[300px] flex-col justify-start items-start gap-3 inline-flex">
-                        <label for="location" class="block text-base font-['Manrope'] font-medium text-gray-900 dark:text-white">Location</label>
-                        <input type="text" id="location" ref="location" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Zurich" required />
-                </div>
+            <div class="h-[87px] w-[300px] flex-col justify-start items-start gap-[12px] flex">
+                <label for="uId" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F]">UID</label>
+                <input type="text" id="uId" ref="uId" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] hover:bg-white" placeholder="fihd048485jshdkjhf"/>
             </div>
-            <div class="self-stretch justify-start items-start gap-8 inline-flex pt-8">
-                <div class="w-[300px] flex-col justify-start items-start gap-3 inline-flex">
-                    <div class="relative">
-                        <div class="w-[300px] flex-col justify-start items-start gap-3 inline-flex">
-                            <div class="absolute inset-y-0 start-0 flex items-center justify-right ps-3 pt-7 pointer-events-none">
-                                <div class="text-sm pl-56 pt-2">tonne</div>
-                            </div>
-                            <label for="quantity" class="block text-base font-['Manrope'] font-medium text-gray-900 dark:text-white">Quantity</label>
-                            <input type="text" id="quantity" ref="quantity" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="X.X" required />
+
+            <div id="date-range-picker" date-rangepicker datepicker-format="yyyy-mm-dd" class="w-[632px] flex gap-[32px]">
+                <div class="relative">
+                    <div class="w-[300px] flex-col justify-start items-start space-y-[12px] inline-flex">
+                        <div class="absolute inset-y-0 start-[270px] pt-[48px] flex items-center pointer-events-none">
+                            <img class="w-[16.67px] h-[18.33px]" src="/public/images/calendar.svg" alt="image description">
                         </div>
+                        <label for="purchaseDate" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Purchase date</label>
+                        <input id="purchaseDate" name="purchaseDate" ref="purchaseDate" type="text" datepicker-format="dd-mm-yyyy" class="bg-[#F8F9FA] font-Manrope border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#74797C] focus:border-[#74797C] active:bg-white focus:bg-white block w-[300px] h-[56px] ps-[16px] hover:bg-white" placeholder="2024-01-20">
                     </div>
                 </div>
-                <div class="w-[300px] flex-col justify-start items-start gap-3 inline-flex">
-                    <div class="relative">
-                        <div class="w-[300px] flex-col justify-start items-start gap-3 inline-flex">
-                            <div class="absolute inset-y-0 start-0 flex items-center justify-right ps-3 pt-7 pointer-events-none">
-                                <div class="text-sm pl-48 pt-2">USD/tonne</div>
-                            </div>
-                            <label for="price" class="block text-base font-['Manrope'] font-medium text-gray-900 dark:text-white">Price</label>
-                            <input type="text" id="price" ref="price" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="X.X" required />
+                <div class="relative">
+                    <div class="w-[300px] flex-col justify-start items-start space-y-[12px] inline-flex">
+                        <div class="absolute inset-y-0 start-[270px] pt-[48px] flex items-center pointer-events-none">
+                            <img class="w-[16.67px] h-[18.33px]" src="/public/images/calendar.svg" alt="image description">
                         </div>
+                        <label for="deliveryDate" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Delivery date</label>
+                        <input id="deliveryDate" name="deliveryDate" ref="deliveryDate" type="text" datepicker-format="dd-mm-yyyy" class="bg-[#F8F9FA] font-Manrope border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#74797C] focus:border-[#74797C] active:bg-white focus:bg-white block w-[300px] h-[56px] ps-[16px] hover:bg-white" placeholder="2024-01-22">
                     </div>
                 </div>
             </div>
-            <div class="self-stretch justify-start items-start gap-8 inline-flex pt-8">
+
+            <div class="self-stretch justify-start items-start gap-[32px] inline-flex">
+                <div class="w-[300px] flex-col justify-start items-start space-y-[12px] inline-flex">
+                        <label for="fuel" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Fuel</label>
+                        <input type="text" id="fuel" ref="fuel" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] hover:bg-white" placeholder="kerosene"/>
+                </div>
                 <div class="w-[300px] flex-col justify-start items-start gap-3 inline-flex">
-                    <label for="trader" class="block text-base font-['Manrope'] font-medium text-gray-900 dark:text-white">Trader</label>
-                    <select id="trader" ref="trader" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <label for="location" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Location</label>
+                        <input type="text" id="location" ref="location" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] hover:bg-white" placeholder="Zurich"/>
+                </div>
+            </div>
+
+            <div class="self-stretch justify-start items-start gap-[32px] inline-flex">
+                <div class="w-[300px] flex-col justify-start items-start space-y-[12px] inline-flex">
+                    <div class="relative">
+                        <div class="w-[300px] flex-col justify-start items-start space-y-[12px] inline-flex">
+                            <div class="absolute inset-y-0 start-4 pt-[40px] flex items-center justify-right pointer-events-none">
+                                <div class="text-[12px] pl-56 pt-3 text-[#0F0F0F]">tonne</div>
+                            </div>
+                            <label for="quantity" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Quantity</label>
+                            <input type="text" id="quantity" ref="quantity" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] pr-[66px] hover:bg-white" placeholder="X.X"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-[300px] flex-col justify-start items-start space-y-[12px] inline-flex">
+                    <div class="relative">
+                        <div class="w-[300px] flex-col justify-start items-start space-y-[12px] inline-flex">
+                            <div class="absolute inset-y-0 start-4 pt-[40px] flex items-center justify-right pointer-events-none">
+                                <div class="text-[12px] pl-[200px] pt-3 text-[#0F0F0F]">USD/tonne</div>
+                            </div>
+                            <label for="price" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Price</label>
+                            <input type="text" id="price" ref="price" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 active:bg-white focus:bg-white focus:border-[#DDDDDD] block w-[300px] h-[56px] p-[16px] pr-[90px] hover:bg-white" placeholder="X.X"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="self-stretch justify-start items-start gap-[32px] inline-flex">
+                <div class="w-[300px] flex-col justify-start items-start space-y-[12px] inline-flex">
+                    <label for="trader" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Trader</label>
+                    <select id="trader" ref="trader" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] block w-[300px] h-[56px] p-[16px] hover:bg-white focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white">
                             <option selected>Select</option>
                             <option v-for="trade in trader.data" :key="trade.id" :value="trade.id">{{trade.name}}</option>
                            
                     </select>
                 </div>
-                <div class="w-[300px] flex-col justify-start items-start gap-3 inline-flex">
-                    <label for="trackingId" class="block text-base font-['Manrope'] font-medium text-gray-900 dark:text-white">Tracking ID</label>
-                    <input type="text" id="trackingId" ref="trackingId" class="bg-gray-50 border border-rose-500 text-gray-900 text-sm rounded-lg focus:ring-rose-500 focus:border-rose-500 block w-full p-2.5 dark:bg-rose-700 dark:border-rose-600 dark:placeholder-rose-400 dark:text-white dark:focus:ring-rose-500 dark:focus:border-rose-500" placeholder="rhif348ffjs" required />
+                <div class="w-[300px] flex-col justify-start items-start space-y-[12px] inline-flex">
+                    <label for="trackingId" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Tracking ID</label>
+                    <input type="text" id="trackingId" ref="trackingId" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 active:bg-white focus:bg-white focus:border-[#DDDDDD] block w-[300px] h-[56px] p-[16px] pr-[90px] hover:bg-white" placeholder="rhif348ffjs"/>
                 </div>
             </div>
 
-            <div class ="pt-8 w-[635px]"><div class="self-stretch h-[0px] border border-neutral-200"></div></div>
-
-            <div class="flex-col justify-end items-start gap-4 flex pt-8">
-                <div class="h-[87px] flex-col justify-start items-start gap-3 flex">
-                    <label for="cdrProvider" class="block text-base font-['Manrope'] font-medium text-gray-900 dark:text-white">CDR provider</label>
-                    <select id="cdrProvider" ref="cdrProvider" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[300px] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <div class ="w-[632px]"><div class="self-stretch h-[0px] border border-neutral-200"></div></div>
+            
+            <div class="w-[300px] h-[147px] flex-col justify-end items-start space-y-[16px] flex">
+                <div class="h-[87px] w-[300px] flex-col justify-start items-start gap-[12px] flex">
+                    <label for="cdrProvider" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F]">CDR provider</label>
+                    <select id="cdrProvider" ref="cdrProvider" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] block w-[300px] h-[56px] p-[16px] hover:bg-white focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white">
                             <option selected>Select</option>
                             <option v-for="cdr in cdrProvider.data" :key="cdr.id" :value="cdr.id">{{cdr.name}}</option>
                     </select>
                 </div>
                 <div class="justify-start items-start inline-flex">
-                    <button type="button" class="text-green-500 bg-white border border-green-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">+ Add new</button>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 flex items-center pl-[12px] pointer-events-none">
+                            <img class="w-[20px] h-[20px]" src="/public/images/add_green.svg" alt="image description">
+                        </div>
+                        <button @click="" type="button" class="w-[112px] h-[44px] text-[#12B87C] bg-[#F8F9FA] border border-[#12B87C] focus:outline-none focus:ring-0 focus:ring-[#12B87C] font-medium text-[14px] py-[10px] pl-[12px] rounded-[4px] hover:bg-green-100">Add new</button>
+                    </div> 
                 </div>
             </div>
-            <div class="h-[87px] flex-col justify-start items-start gap-3 flex pt-8">
-                <label for="cdrId" class="block text-base font-['Manrope'] font-medium text-gray-900 dark:text-white">CDR ID</label>
-                <input type="text" id="cdrId" ref="cdrId" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[300px] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="hsdg3443dfdfd" required />
+
+            <div class="h-[87px] w-[300px] flex-col justify-start items-start space-y-[12px] flex">
+                <label for="cdrId" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F]">CDR ID</label>
+                <input type="text" id="cdrId" ref="cdrId" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] hover:bg-white" placeholder="hsdg3443dfdfd"/>
             </div>
-            <div class="h-[87px] flex-col justify-start items-start gap-3 flex pt-10">
-            <div class="relative">
-                        <div class="w-[300px] flex-col justify-start items-start gap-3 inline-flex">
-                            <div class="absolute inset-y-0 start-0 flex items-center justify-right ps-3 pt-7 pointer-events-none">
-                                <div class="text-sm pl-56 pt-2">CO2/t</div>
-                            </div>
-                <label for="carbonIntensityUpstream" class="block text-base font-['Manrope'] font-medium text-gray-900 dark:text-white">Carbon intensity upstream</label>
-                <input type="text" id="carbonIntensityUpstream" ref="carbonIntensityUpstream" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[300px] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="X.X" required />
-            </div></div></div>
-            <div class="h-[87px] flex-col justify-start items-start gap-3 flex pt-12">
+
+            <div class="h-[87px] w-[300px] flex-col justify-start items-start space-y-[12px] flex">
                 <div class="relative">
-                            <div class="w-[300px] flex-col justify-start items-start gap-3 inline-flex">
-                                <div class="absolute inset-y-0 start-0 flex items-center justify-right ps-3 pt-7 pointer-events-none">
-                                    <div class="text-sm pl-56 pt-2">tonne</div>
-                                </div>
-                                <label for="carbonRemoved" class="block text-base font-['Manrope'] font-medium text-gray-900 dark:text-white">Carbon removed</label>
-                                <input type="text" id="carbonRemoved" ref="carbonRemoved" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[300px] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="X.X" required />
-                            </div>
+                    <div class="w-[300px] flex-col justify-start items-start space-y-[12px] inline-flex">
+                        <div class="absolute inset-y-0 start-4 pt-[40px] flex items-center justify-right pointer-events-none">
+                            <div class="text-[12px] pl-[230px] pt-3 text-[#0F0F0F]">CO2/t</div>
+                        </div>
+                        <label for="carbonIntensityUpstream" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Carbon intensity upstream</label>
+                        <input type="text" id="carbonIntensityUpstream" ref="carbonIntensityUpstream" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 active:bg-white focus:bg-white focus:border-[#DDDDDD] block w-[300px] h-[56px] p-[16px] pr-[60px] hover:bg-white" placeholder="X.X"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="h-[87px] w-[300px] flex-col justify-start items-start space-y-[12px] flex">
+                <div class="relative">
+                    <div class="w-[300px] flex-col justify-start items-start space-y-[12px] inline-flex">
+                        <div class="absolute inset-y-0 start-4 pt-[40px] flex items-center justify-right pointer-events-none">
+                            <div class="text-[12px] pl-[230px] pt-3 text-[#0F0F0F]">tonne</div>
+                        </div>
+                        <label for="carbonRemoved" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Carbon removed</label>
+                        <input type="text" id="carbonRemoved" ref="carbonRemoved" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 active:bg-white focus:bg-white focus:border-[#DDDDDD] block w-[300px] h-[56px] p-[16px] pr-[60px] hover:bg-white" placeholder="X.X"/>
+                    </div>
                 </div>
             </div>
         </div>
-         <div class="w-full h-11 justify-end items-center gap-4 inline-flex pt-28">
-                <div class="justify-start items-center gap-4 flex">
-                    <button @click="goToTransactionsPage" type="button" class="text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Cancel</button>
-                    <button @click="submitForm" type="button" class="focus:outline-none text-white bg-emerald-500 hover:bg-emerald-800 focus:ring-1 focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">Save transaction</button>
+        <div class="w-full h-[44px] justify-end items-center flex pt-[180px]">
+                <div class="justify-end items-center gap-[16px] flex">
+                    <button @click="goToTransactionsPage" type="button" class="w-[78px] h-[44px] text-[#74797C] bg-[#F8F9FA] border border-[#74797C] hover:bg-[#DDDDDD] focus:ring-4 font-medium text-[14px] rounded-[4px] px-[16px] py-[10px]">Cancel</button>
+                    <button @click="submitForm" type="button" class="w-[143px] h-[44px] text-white text-[14px] bg-[#12B87C] hover:bg-emerald-400 focus:ring-1 font-medium rounded-[4px] text-[14px] px-[16px] py-[10px]">Save transaction</button>
                 </div>
         </div>
+        <div class="pt-[64px]"></div>
+         
 </div>
 
 <!---form ends -->
-
-
-<!-- buttons starts -->
-
-
-
-<!-- buttons end -->
 
 </template>
 
@@ -197,6 +203,9 @@ export default {
     methods: {
         goToTransactionsPage() {
             this.$router.push("/transactions");
+        },
+        goToAddCustomerPage() {
+           
         },
         submitForm(){
             axios.post('transaction', 
@@ -228,17 +237,23 @@ export default {
             cdrProvider: []
         };
     },
-    async mounted() {
-        try {
-            const response_customer = await axios.get('customer');
-            this.customer = response_customer.data;
-            const response_trader = await axios.get('trader');
-            this.trader = response_trader.data;
-            const response_cdrProvider = await axios.get('supplier');
-            this.cdrProvider = response_cdrProvider.data;
-        } 
-        catch (error) {
-            console.error(error);
+    async created() {
+        let token = localStorage.getItem('token');
+        if(token){
+            try {
+                const response_customer = await axios.get('customer');
+                this.customer = response_customer.data;
+                const response_trader = await axios.get('trader');
+                this.trader = response_trader.data;
+                const response_cdrProvider = await axios.get('supplier');
+                this.cdrProvider = response_cdrProvider.data;
+            } 
+            catch (error) {
+                console.error(error);
+            }
+        }
+        else{
+            this.$router.push("/");
         }
     }
 };

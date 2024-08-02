@@ -4,9 +4,14 @@
       <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                  Sign in to your account
+                  Register your account
               </h1>
               <form class="space-y-4 md:space-y-6" action="#" @submit.prevent="handleSubmit">
+                  <div>
+                      <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+                      <input type="name" name="name" id="name" v-model="name" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Name">
+                      <p id="name_error" ref="name_error" class="text-rose-400">{{name_error}}</p>
+                  </div>
                   <div>
                       <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
                       <input type="text" name="email" id="email" v-model="email" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com">
@@ -17,21 +22,18 @@
                       <input type="password" name="password" id="password" v-model="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                       <p id="password_error" ref="password_error" class="text-rose-400">{{password_error}}</p>
                   </div>
-                  <div class="flex items-center justify-between">
-                      <div class="flex items-start">
-                          <div class="flex items-center h-5">
-                            <input id="remember" aria-describedby="remember" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800">
-                          </div>
-                          <div class="ml-3 text-sm">
-                            <label for="remember" class="text-gray-500 dark:text-gray-300">Remember me</label>
-                          </div>
-                      </div>
-                      <router-link to="" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</router-link>
+                   <div>
+                      <label for="confirmPassword" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm Password</label>
+                      <input type="password" name="confirmPassword" id="confirmPassword" v-model="confirmPassword" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                      <p id="confirmPassword_error" ref="confirmPassword_error" class="text-rose-400">{{confirmPassword_error}}</p>
                   </div>
-                  <button type="submit" class="w-full text-white bg-emerald-600 hover:bg-emerald-700 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">Sign in</button>
-                  <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-                      Don’t have an account yet? <router-link to="/register" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</router-link>
-                  </p>
+                  <div class="flex items-center justify-between">
+                      <div class="flex items-center">
+                      </div>
+                      <router-link to="/" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Sign in</router-link>
+                  </div>
+                  <button type="submit" class="w-full text-white bg-emerald-600 hover:bg-emerald-700 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">Sign up</button>
+                  
               </form>
           </div>
       </div>
@@ -40,34 +42,45 @@
 
 </template>
 
-
 <script>
 import axios from 'axios';
 import {useRouter} from 'vue-router';
 
 export default{
-    name: "Login",
+    name: "Register",
     data() {
         return {
+            name: '',
             email: '',
             password: '',
+            confirmPassword: '',
+            name_error:'',
             email_error:'',
-            password_error:''
+            password_error:'',
+            confirmPassword_error:''
         }
     },
     methods: {
-        async handleSubmit() {
+        async handleSubmit(){
             try{
-                const response = await axios.post('login', 
-                    {
-                        email:this.email,
-                        password: this.password
+                const response = await axios.post('register', 
+                {
+                        "name": this.name,
+                        "email": this.email,
+                        "password": this.password,
+                        "password_confirmation": this.confirmPassword,
+                        "user_type_id" : 1
                     }
                 );
-                localStorage.setItem('token',response.data.data.authorisation.access_token);
-                this.$router.push('/transactions');
+                this.$router.push('/');
             }
             catch (error) {
+                if(error.response.data.errors.name){
+                    this.name_error = error.response.data.errors.name[0];
+                }
+                else{
+                    this.name_error = "";
+                }
                 if(error.response.data.errors.email){
                     this.email_error = error.response.data.errors.email[0];
                 }
@@ -80,11 +93,8 @@ export default{
                 else{
                     this.password_error = "";
                 }
-                if(error.response){
-                    this.$router.push('/');
-                }
             }
         }
-    }
+    } 
 }
 </script>

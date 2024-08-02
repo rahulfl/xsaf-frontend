@@ -1,14 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import login from '../views/Login.vue'
-import dashboard from '../views/master/DashboardView.vue'
+import register from '../views/Register.vue'
+import main from '../views/master/MainView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-        name: 'Dashboard',
-        path: '/',
-        component: dashboard,
+        name: 'main',
+        path: '/main',
+        component: main,
         children: [
             {
                 name: 'Transactions',
@@ -21,6 +22,16 @@ const router = createRouter({
                 component: () => import("../views/AddTransactionsView.vue"),
             }
         ]
+    },
+    {
+        name: 'Login',
+        path: '/',
+        component: login,
+    },
+    {
+        name: 'Register',
+        path: '/register',
+        component: register,
     },
 ],
 });
