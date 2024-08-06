@@ -5,7 +5,7 @@
 
 @font-face {
     font-family: 'Manrope';
-    src: url('../public/fonts/Manrope/static/Manrope-Regular.ttf') format('truetype');
+    src: url("fonts/Manrope/static/Manrope-Regular.ttf") format('truetype');
     font-weight: normal;
     font-style: normal;
 }

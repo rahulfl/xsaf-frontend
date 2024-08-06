@@ -47,6 +47,12 @@ import {useRouter} from 'vue-router';
 
 export default{
     name: "Login",
+    async created() {
+        let token = localStorage.getItem('token');
+        if(token){
+            this.$router.push('/transactions');
+        }
+    },
     data() {
         return {
             email: '',

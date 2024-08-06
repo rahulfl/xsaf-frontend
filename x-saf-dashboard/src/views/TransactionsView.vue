@@ -193,7 +193,7 @@ export default {
     name: "TransactionsView",
     methods: {
         goToAddTransactionsPage() {
-            this.$router.push("/addtransactions");
+            this.$router.push("/add-transactions");
         },
     },
     data() {

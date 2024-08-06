@@ -27,6 +27,14 @@
                       <input type="password" name="confirmPassword" id="confirmPassword" v-model="confirmPassword" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                       <p id="confirmPassword_error" ref="confirmPassword_error" class="text-rose-400">{{confirmPassword_error}}</p>
                   </div>
+                  <div>
+                  <label for="user_type_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">User type</label>
+                  <select id="user_type_id" ref="user_type_id" v-model="user_type_id" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] block w-[300px] h-[56px] p-[16px] hover:bg-white focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white">
+                        <option selected>Select</option>
+                        <option v-for="u_type in user_type" :value="u_type.user_type_id" :key="u_type.user_type_id">{{u_type.name}}</option>
+                  </select>
+                <p id="user_type_id_error" ref="user_type_id_error" class="text-rose-400">{{user_type_id_error}}</p>
+                  </div>
                   <div class="flex items-center justify-between">
                       <div class="flex items-center">
                       </div>
@@ -42,6 +50,14 @@
 
 </template>
 
+<script setup>
+const user_type = [
+    {"user_type_id":2,"name":"Trader"},
+    {"user_type_id":3,"name":"Customer"},
+    {"user_type_id":4,"name":"Supplier"}
+]
+</script>
+
 <script>
 import axios from 'axios';
 import {useRouter} from 'vue-router';
@@ -54,22 +70,30 @@ export default{
             email: '',
             password: '',
             confirmPassword: '',
+            user_type_id: '',
             name_error:'',
             email_error:'',
             password_error:'',
-            confirmPassword_error:''
+            confirmPassword_error:'',
+            user_type_id_error: ''
         }
     },
     methods: {
         async handleSubmit(){
             try{
+                if(this.user_type_id == 'Select' || this.user_type_id== ''){
+                    this.user_type_id_error = "Select a user type";
+                }
+                else{
+                    this.user_type_id_error ="";
+                }
                 const response = await axios.post('register', 
                 {
                         "name": this.name,
                         "email": this.email,
                         "password": this.password,
                         "password_confirmation": this.confirmPassword,
-                        "user_type_id" : 1
+                        "user_type_id" : this.user_type_id
                     }
                 );
                 this.$router.push('/');
@@ -92,6 +116,12 @@ export default{
                 }
                 else{
                     this.password_error = "";
+                }
+                if(this.user_type_id == 'Select' || this.user_type_id== ''){
+                    this.user_type_id_error = "Select a user type";
+                }
+                else{
+                    this.user_type_id_error ="";
                 }
             }
         }
