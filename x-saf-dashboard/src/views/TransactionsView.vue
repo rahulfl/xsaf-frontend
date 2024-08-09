@@ -138,8 +138,8 @@
                     {{transaction.trader_name}}
                 </td>
                 <td class="pr-[16px] py-[16px] pl-[24px] text-end">
-                    <button type="button" class="w-[78px] h-[37px] text-[#74797C] bg-white border border-[#74797C] focus:outline-none hover:bg-[#F8F9FA] focus:ring-4 focus:ring-[#74797C] font-medium rounded-[4px] text-[14px] px-[16px] py-[8px] me-[8px]">Details</button>
-                    <button type="button" class="w-[58px] h-[37px] text-[#12B87C] bg-white border border-[#12B87C] focus:outline-none hover:bg-green-50 focus:ring-4 focus:ring-[#74797C] font-medium rounded-[4px] text-[14px] px-[16px] py-[8px]">Edit</button>
+                    <button type="button" class="w-[78px] h-[37px] text-[#74797C] bg-white border border-[#74797C] focus:outline-none hover:bg-[#F8F9FA] focus:ring-0 focus:ring-[#74797C] font-medium rounded-[4px] text-[14px] px-[16px] py-[8px] me-[8px]">Details</button>
+                    <button type="button" @click="EditTransactions(transaction.id)" class="w-[58px] h-[37px] text-[#12B87C] bg-white border border-[#12B87C] focus:outline-none hover:bg-green-50 focus:ring-0 focus:ring-[#74797C] font-medium rounded-[4px] text-[14px] px-[16px] py-[8px]">Edit</button>
                 </td>
             </tr>
         </tbody>
@@ -188,13 +188,28 @@ const stats = [
 
 <script>
 import axios from 'axios';
+import { RouterView } from 'vue-router';
+import { useRouter } from 'vue-router';
 
 export default {
     name: "TransactionsView",
+    setup() {
+            const router = useRouter();
+            return { router };
+        },
     methods: {
         goToAddTransactionsPage() {
             this.$router.push("/add-transactions");
         },
+        EditTransactions(t_id) {
+            this.$router.push(
+                    { 
+                        path: '/edit-transactions', 
+                        query: { id: 1,}
+                    } 
+                );
+           
+        }
     },
     data() {
         return {

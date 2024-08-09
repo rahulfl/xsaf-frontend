@@ -20,6 +20,11 @@ const router = createRouter({
                 name: 'Add Transactions',
                 path: '/add-transactions',
                 component: () => import("../views/AddTransactionsView.vue"),
+            },
+            {
+                name: 'Edit Transactions',
+                path: '/edit-transactions',
+                component: () => import("../views/EditTransactionsView.vue"),
             }
         ]
     },
