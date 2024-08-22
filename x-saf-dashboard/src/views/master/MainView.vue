@@ -1,10 +1,10 @@
 <template>
     <div class="w-screen h-screen flex font-Manrope"> 
         <!--- Left Bar -->
-        <div class="w-[347px] h-[1039px] bg-white text-[#0F0F0F]" v-show="showSide">
+        <div class="w-[347px] h-[1039px] bg-white text-[#0F0F0F] z-10" v-show="showSide">
             <!--- Side bar top left Heading-->
-            <div class="w-[347px] h-[112px] p-[32px] bg-white justify-start inline-flex">
-                <div class="w-[179.26px] h-[48px] relative">
+            <div class="w-[347px] h-[112px] p-[32px] bg-white justify-start inline-flex border-solid border-r-[1px] border-[#F3F3F4]">
+                <div class="w-[179.26px] h-[48px] fixed">
                     <div class="flex gap-2">
                         <img class="" src="/public/images/Vector.svg" alt="image description">
                         <img class="" src="/public/images/Group.svg" alt="image description">
@@ -12,31 +12,31 @@
                 </div>
             </div>
             <!-- Left sidebar nav items-->
-            <div class="h-[927px] w-[347px] bg-white px-[32px] py-[24px]">
+            <div class="h-[927px]  bg-white px-[32px] py-[24px] border-solid border-r-[1px] border-[#F3F3F4] fixed">
                 <div class="flex flex-col justify-between w-[283px] h-[332px] gap-[8px]">
-                    <router-link to="" class="inline-flex relative items-start w-[283px] h-[60px] p-[20px] font-medium text-[16px] text-[#0F0F0F] font-Manrope rounded-[8px] hover:bg-gray-100 active:bg-[#D9EBFF] focus:bg-[#D9EBFF] gap-[24px]">
+                    <router-link to="" class="inline-flex relative items-center w-[283px] h-[60px] p-[20px] font-medium text-[16px] text-[#0F0F0F] font-Manrope rounded-[8px] hover:bg-gray-100 active:bg-[#D9EBFF] focus:bg-[#D9EBFF] gap-[24px]">
                         <img class="w-[17.5px] h-[20px]" src="/public/images/dashboard.svg" alt="image description">
                             Dashboard
                     </router-link>
-                    <router-link to="/transactions" class="inline-flex relative items-start w-[283px] h-[60px] p-[20px] font-medium text-[16px] text-[#0F0F0F] font-Manrope rounded-[8px] hover:bg-gray-100 active:bg-[#D9EBFF] focus:bg-[#D9EBFF] gap-[24px]">
+                    <router-link to="/transactions" class="inline-flex relative items-center w-[283px] h-[60px] p-[20px] font-medium text-[16px] text-[#0F0F0F] font-Manrope rounded-[8px] hover:bg-gray-100 active:bg-[#D9EBFF] focus:bg-[#D9EBFF] gap-[24px]">
                         <img class="w-[17.5px] h-[20px]" src="/public/images/transactions.svg" alt="image description">
                             Transactions
                     </router-link>
-                    <router-link to="" class="inline-flex relative items-start w-[283px] h-[60px] p-[20px] font-medium text-[16px] text-[#0F0F0F] font-Manrope rounded-[8px] hover:bg-gray-100 active:bg-[#D9EBFF] focus:bg-[#D9EBFF] gap-[24px]">
+                    <router-link to="" class="inline-flex relative items-center w-[283px] h-[60px] p-[20px] font-medium text-[16px] text-[#0F0F0F] font-Manrope rounded-[8px] hover:bg-gray-100 active:bg-[#D9EBFF] focus:bg-[#D9EBFF] gap-[24px]">
                         <img class="w-[17.5px] h-[20px]" src="/public/images/customers.svg" alt="image description">
                             Customers
                     </router-link>
-                    <router-link to="" class="inline-flex relative items-start w-[283px] h-[60px] p-[20px] font-medium text-[16px] text-[#0F0F0F] font-Manrope rounded-[8px] hover:bg-gray-100 active:bg-[#D9EBFF] focus:bg-[#D9EBFF] gap-[24px]">
+                    <router-link to="" class="inline-flex relative items-center w-[283px] h-[60px] p-[20px] font-medium text-[16px] text-[#0F0F0F] font-Manrope rounded-[8px] hover:bg-gray-100 active:bg-[#D9EBFF] focus:bg-[#D9EBFF] gap-[24px]">
                         <img class="w-[17.5px] h-[20px]" src="/public/images/traders.svg" alt="image description">
                             Traders
                     </router-link>
-                    <router-link to="" class="inline-flex relative items-start w-[283px] h-[60px] p-[20px] font-medium text-[16px] text-[#0F0F0F] font-Manrope rounded-[8px] hover:bg-gray-100 active:bg-[#D9EBFF] focus:bg-[#D9EBFF] gap-[24px]">
+                    <router-link to="" class="inline-flex relative items-center w-[283px] h-[60px] p-[20px] font-medium text-[16px] text-[#0F0F0F] font-Manrope rounded-[8px] hover:bg-gray-100 active:bg-[#D9EBFF] focus:bg-[#D9EBFF] gap-[24px]">
                         <img class="w-[17.5px] h-[20px]" src="/public/images/suppliers.svg" alt="image description">
                             Suppliers
                     </router-link>
                 </div>
                 <!--Bottom left sidebar items-->
-                <div class="flex w-[176px] h-[65px] p-[24px] gap-[32px] pt-[530px]">
+                <div class="flex w-[176px] h-[65px] p-[24px] gap-[32px] pt-[230px]">
                     <router-link to="" class="inline-flex items-center font-medium text-[14px] text-[#0F0F0F] font-Manrope">
                         About
                     </router-link>
@@ -48,7 +48,7 @@
         </div>
         <div class="w-full h-full font-Manrope">
             <!--Top menu-->
-            <div class="h-[112px] bg-white flex text-left w-full p-[32px]">
+            <div class="h-[112px] bg-white flex text-left w-full p-[32px] relative" id="box-shadow">
                 <div class="h-[46px] w-[378px] flex items-center">
                     <!--Main menu stats-->
                     <div class="relative overflow-x">
@@ -68,11 +68,11 @@
                         </div>
                     </div>
 
-                    <div class="w-[188px] h-[48px] gap-[32px] absolute top-10 right-5">
+                    <div class="w-[188px] h-[48px] absolute top-10 end-2">
                         <!-- User login -->
-                        <div class="w-[200px] ">
+                        <div class="w-[200px]">
                             <div class="flex items-center justify-start space-x-4" >
-                                <img class="w-[40px] h-[40px] relative rounded-[115.44px]" src="/man_dp.jpg" />
+                                <img class="w-[40px] h-[40px] relative rounded-[115.44px] object-cover" src="/man_dp.jpg" />
                                 <div class="font-semibold dark:text-white text-left">
                                     <div v-if="user">{{user.name}}</div>
                                 </div>
@@ -80,7 +80,7 @@
                             </div>
 
                             <!-- Drop down -->
-                            <div v-show="showDropDown" class="absolute right-[10px] z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                            <div v-show="showDropDown" class="absolute right-[65px] z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                                 <div class="py-1 text-left" role="none">
                                     <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
                                     <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">Account settings</a>
@@ -149,5 +149,7 @@ export default {
 </script>
 
 <style>
-
+#box-shadow {
+  box-shadow: 0px 1px 12px 0px #edf2f5;
+}
 </style>
