@@ -113,7 +113,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="transaction in transactions.data" :key="transaction.id" class="bg-white text-[#0F0F0F] h-[69px] font-Manrope font-medium">
+            <tr v-for="transaction in paginatedItems" :key="transaction.id" class="bg-white text-[#0F0F0F] h-[69px] font-Manrope font-medium">
                 <td class="pr-[16px] py-[16px] pl-[24px]">
                     <div class="flex items-center">
                         <input id="checkbox-delete" type="checkbox" class="w-[15px] h-[15px] bg-[#F3F3F4] border-[#74797C] focus:[#1983FF] focus:ring-0 hover:ring-1 hover:border-[#1983FF]">
@@ -145,31 +145,14 @@
         </tbody>
     </table>
 </div>
+
 <!--Pagination for TRANSACTION TABLE starts-->
     <nav class="flex items-center flex-column flex-wrap md:flex-row justify-between pt-[32px] px-[16px]" aria-label="Table navigation">
-        <span class="text-[14px] font-normal text-[#74797C] mb-4 md:mb-0 block w-full md:inline md:w-auto">Showing data 1-10 of 1000 entries</span>
+        <span class="text-[14px] font-normal text-[#74797C] mb-4 md:mb-0 block w-full md:inline md:w-auto">Showing data {{showingData[0]}}-{{showingData[1]}} of {{items.length}} entries</span>
         <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8 gap-1">
-            <li>
-                <a href="#" class="flex items-center justify-center px-[12px] py-[12px] h-[40px] w-[40px] leading-tight text-[#74797C] bg-white border border-[#74797C] hover:bg-white hover:text-[#74797C]"><img class="w-[14px] h-[14px]" src="/public/images/left_arrow.svg" alt="image description"></a>
-            </li>
-            <li>
-                <a href="#" class="flex items-center justify-center px-[12px] py-[12px] h-[40px] w-[40px] leading-tight text-[#74797C] bg-white border border-[#74797C] hover:bg-white hover:text-[#74797C]">1</a>
-            </li>
-            <li>
-                <a href="#" class="flex items-center justify-center px-[12px] py-[12px] h-[40px] w-[40px] leading-tight text-[#74797C] bg-white border border-[#74797C] hover:bg-white hover:text-[#74797C]">2</a>
-            </li>
-            <li>
-                <a href="#" aria-current="page" class="flex items-center justify-center px-[12px] py-[12px] h-[40px] w-[40px] leading-tight text-[#74797C] bg-white border border-[#74797C] hover:bg-white hover:text-[#74797C]">3</a>
-            </li>
-            <li>
-                <a href="#" class="flex items-center justify-center px-[12px] py-[12px] h-[40px] w-[40px] leading-tight text-[#74797C] bg-white border border-[#74797C] hover:bg-white hover:text-[#74797C]">4</a>
-            </li>
-            <li>
-                <a href="#" class="flex items-center justify-center px-[12px] py-[12px] h-[40px] w-[40px] leading-tight text-[#74797C] bg-white border border-[#74797C] hover:bg-white hover:text-[#74797C]">5</a>
-            </li>
-            <li>
-                <a href="#" class="flex items-center justify-center px-[12px] py-[12px] h-[40px] w-[40px] leading-tight text-[#74797C] bg-white border border-[#74797C] hover:bg-white hover:text-[#74797C]"><img class="w-[14px] h-[14px]" src="/public/images/right_arrow.svg" alt="image description"></a>
-            </li>
+            <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1" class="flex items-center justify-center px-[12px] py-[12px] h-[40px] w-[40px] leading-tight text-[#74797C] bg-white border border-[#74797C] hover:bg-white hover:text-[#74797C]"><img class="w-[14px] h-[14px]" src="/public/images/left_arrow.svg" alt="image description"></button>
+            <button v-for="page in totalPages" :key="page" @click="changePage(page)" :class="{ active: currentPage === page }" class="flex items-center justify-center px-[12px] py-[12px] h-[40px] w-[40px] leading-tight text-[#74797C] bg-white border border-[#74797C] hover:bg-white hover:text-[#74797C]">{{ page }}</button>
+            <button @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages" class="flex items-center justify-center px-[12px] py-[12px] h-[40px] w-[40px] leading-tight text-[#74797C] bg-white border border-[#74797C] hover:bg-white hover:text-[#74797C]"><img class="w-[14px] h-[14px]" src="/public/images/right_arrow.svg" alt="image description"></button>
         </ul>
     </nav>
 <!--Pagination for TRANSACTION TABLE ends-->
@@ -193,6 +176,7 @@ import { useRouter } from 'vue-router';
 
 export default {
     name: "TransactionsView",
+    props: ['items','showingData'],
     setup() {
             const router = useRouter();
             return { router };
@@ -208,12 +192,31 @@ export default {
                         query: { id: 1,}
                     } 
                 );
-           
+        },
+        changePage(page) {
+        if (page >= 1 && page <= this.totalPages) {
+            this.currentPage = page;
+            if(page == 1){
+                this.showingData[0] = 1;
+                this.showingData[1] = this.itemsPerPage;
+            }
+            else{
+                this.showingData[1] = page*this.itemsPerPage;
+                this.showingData[0] = this.showingData[1]-this.itemsPerPage+1;
+                if(this.showingData[1]>this.items.length){
+                    this.showingData[1] =this.items.length;
+                }
+            }
         }
+        },
     },
     data() {
         return {
-            transactions: []
+            transactions: [],
+            items: [],
+            currentPage: 1,
+            itemsPerPage: 7,
+            showingData: []
         };
     },
     async created() {
@@ -222,6 +225,9 @@ export default {
             try {
                 const response = await axios.get('transaction');
                 this.transactions = response.data;
+                response.data.data.forEach((value, index) => {
+                this.items.push(value);
+                });
 
                 for(let i=0;i<response.data.data.length;i++){
                     const cust = await axios.get('customer/'+response.data.data[i].customer_id);
@@ -237,6 +243,8 @@ export default {
                         }
                     }
                 }
+                this.showingData[0] = 1;
+                this.showingData[1] = this.itemsPerPage;
             } 
             catch (error) {
                 console.error(error);
@@ -245,7 +253,16 @@ export default {
         else{
             this.$router.push("/");
         }
-    }
+    },
+    computed: {
+        totalPages() {
+        return Math.ceil(this.items.length / this.itemsPerPage);
+        },
+        paginatedItems() {
+        const start = (this.currentPage - 1) * this.itemsPerPage;
+        return this.items.slice(start, start + this.itemsPerPage);
+        },
+    },
 };
 </script>
 

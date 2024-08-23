@@ -3,7 +3,7 @@
         <!--- Left Bar -->
         <div class="w-[347px] h-[1039px] bg-white text-[#0F0F0F] z-10" v-show="showSide">
             <!--- Side bar top left Heading-->
-            <div class="w-[347px] h-[112px] p-[32px] bg-white justify-start inline-flex border-solid border-r-[1px] border-[#F3F3F4]">
+            <div class="w-[347px] h-[112px] p-[32px] bg-white justify-start inline-flex border-solid border-r-[1px] border-[#F3F3F4] relative">
                 <div class="w-[179.26px] h-[48px] fixed">
                     <div class="flex gap-2">
                         <img class="" src="/public/images/Vector.svg" alt="image description">
@@ -12,9 +12,9 @@
                 </div>
             </div>
             <!-- Left sidebar nav items-->
-            <div class="h-[927px]  bg-white px-[32px] py-[24px] border-solid border-r-[1px] border-[#F3F3F4] fixed">
-                <div class="flex flex-col justify-between w-[283px] h-[332px] gap-[8px]">
-                    <router-link to="" class="inline-flex relative items-center w-[283px] h-[60px] p-[20px] font-medium text-[16px] text-[#0F0F0F] font-Manrope rounded-[8px] hover:bg-gray-100 active:bg-[#D9EBFF] focus:bg-[#D9EBFF] gap-[24px]">
+            <div class="h-[927px] w-[347px] bg-white px-[32px] py-[24px] border-solid border-r-[1px] border-[#F3F3F4]">
+                <div class="flex flex-col justify-between w-[283px] h-[332px] gap-[8px] fixed">
+                    <router-link to="/dashboard" class="inline-flex relative items-center w-[283px] h-[60px] p-[20px] font-medium text-[16px] text-[#0F0F0F] font-Manrope rounded-[8px] hover:bg-gray-100 active:bg-[#D9EBFF] focus:bg-[#D9EBFF] gap-[24px]">
                         <img class="w-[17.5px] h-[20px]" src="/public/images/dashboard.svg" alt="image description">
                             Dashboard
                     </router-link>
@@ -22,25 +22,25 @@
                         <img class="w-[17.5px] h-[20px]" src="/public/images/transactions.svg" alt="image description">
                             Transactions
                     </router-link>
-                    <router-link to="" class="inline-flex relative items-center w-[283px] h-[60px] p-[20px] font-medium text-[16px] text-[#0F0F0F] font-Manrope rounded-[8px] hover:bg-gray-100 active:bg-[#D9EBFF] focus:bg-[#D9EBFF] gap-[24px]">
+                    <router-link to="/customers" class="inline-flex relative items-center w-[283px] h-[60px] p-[20px] font-medium text-[16px] text-[#0F0F0F] font-Manrope rounded-[8px] hover:bg-gray-100 active:bg-[#D9EBFF] focus:bg-[#D9EBFF] gap-[24px]">
                         <img class="w-[17.5px] h-[20px]" src="/public/images/customers.svg" alt="image description">
                             Customers
                     </router-link>
-                    <router-link to="" class="inline-flex relative items-center w-[283px] h-[60px] p-[20px] font-medium text-[16px] text-[#0F0F0F] font-Manrope rounded-[8px] hover:bg-gray-100 active:bg-[#D9EBFF] focus:bg-[#D9EBFF] gap-[24px]">
+                    <router-link to="/traders" class="inline-flex relative items-center w-[283px] h-[60px] p-[20px] font-medium text-[16px] text-[#0F0F0F] font-Manrope rounded-[8px] hover:bg-gray-100 active:bg-[#D9EBFF] focus:bg-[#D9EBFF] gap-[24px]">
                         <img class="w-[17.5px] h-[20px]" src="/public/images/traders.svg" alt="image description">
                             Traders
                     </router-link>
-                    <router-link to="" class="inline-flex relative items-center w-[283px] h-[60px] p-[20px] font-medium text-[16px] text-[#0F0F0F] font-Manrope rounded-[8px] hover:bg-gray-100 active:bg-[#D9EBFF] focus:bg-[#D9EBFF] gap-[24px]">
+                    <router-link to="/suppliers" class="inline-flex relative items-center w-[283px] h-[60px] p-[20px] font-medium text-[16px] text-[#0F0F0F] font-Manrope rounded-[8px] hover:bg-gray-100 active:bg-[#D9EBFF] focus:bg-[#D9EBFF] gap-[24px]">
                         <img class="w-[17.5px] h-[20px]" src="/public/images/suppliers.svg" alt="image description">
                             Suppliers
                     </router-link>
                 </div>
                 <!--Bottom left sidebar items-->
-                <div class="flex w-[176px] h-[65px] p-[24px] gap-[32px] pt-[230px]">
-                    <router-link to="" class="inline-flex items-center font-medium text-[14px] text-[#0F0F0F] font-Manrope">
+                <div class="flex w-[176px] h-[65px] p-[24px] gap-[32px] pt-[550px]">
+                    <router-link to="" class="inline-flex items-center font-medium text-[14px] text-[#0F0F0F] font-Manrope fixed">
                         About
                     </router-link>
-                    <router-link to="" class="inline-flex items-center font-medium text-[14px] text-[#0F0F0F] font-Manrope">
+                    <router-link to="" class="inline-flex items-center font-medium text-[14px] text-[#0F0F0F] font-Manrope pl-[64px] fixed">
                         Contact
                     </router-link>
                 </div>
@@ -96,7 +96,7 @@
                 </div>
             </div>
             <!--body section-->
-            <div class="h-[1960] bg-[#F8F9FA] p-[32px] overflow-y-auto">
+            <div class="h-[1960] bg-[#F8F9FA] p-[32px]">
                 <router-view></router-view>
             </div>
         </div>

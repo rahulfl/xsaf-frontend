@@ -25,7 +25,27 @@ const router = createRouter({
                 name: 'Edit Transactions',
                 path: '/edit-transactions',
                 component: () => import("../views/EditTransactionsView.vue"),
-            }
+            },
+            {
+                name: 'Dashboard',
+                path: '/dashboard',
+                component: () => import("../views/DashboardView.vue"),
+            },
+            {
+                name: 'Customers',
+                path: '/customers',
+                component: () => import("../views/CustomersView.vue"),
+            },
+            {
+                name: 'Traders',
+                path: '/traders',
+                component: () => import("../views/TradersView.vue"),
+            },
+            {
+                name: 'Suppliers',
+                path: '/suppliers',
+                component: () => import("../views/SuppliersView.vue"),
+            },
         ]
     },
     {
