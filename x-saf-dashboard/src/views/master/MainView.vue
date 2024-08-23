@@ -76,11 +76,33 @@
                                 <div class="font-semibold dark:text-white text-left">
                                     <div v-if="user">{{user.name}}</div>
                                 </div>
-                                <svg @click="toggleDrop" class="h-[24px] w-[24px] text-black" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <circle cx="5" cy="5" r="1" />  <circle cx="12" cy="5" r="1" />  <circle cx="19" cy="5" r="1" />  <circle cx="5" cy="12" r="1" />  <circle cx="12" cy="12" r="1" />  <circle cx="19" cy="12" r="1" />  <circle cx="5" cy="19" r="1" />  <circle cx="12" cy="19" r="1" />  <circle cx="19" cy="19" r="1" /></svg>
+                                <div @click="toggleDrop" class="flex flex-row space-x-1 pb-3">
+                                <div class="h-[4px] w-[4px]"> 
+                                    <div class="space-y-1">
+                                    <img class="w-[4px] h-[4px] " src="/images/rectangle_1.svg" /> 
+                                    <img class="w-[4px] h-[4px]" src="/images/rectangle_1.svg" /> 
+                                    <img class="w-[4px] h-[4px]" src="/images/rectangle_1.svg" />
+                                    </div>
+                                </div>
+                                <div class="h-[4px] w-[4px]"> 
+                                    <div class="space-y-1">
+                                    <img class="w-[4px] h-[4px] " src="/images/rectangle_1.svg" /> 
+                                    <img class="w-[4px] h-[4px]" src="/images/rectangle_1.svg" /> 
+                                    <img class="w-[4px] h-[4px]" src="/images/rectangle_1.svg" />
+                                    </div> 
+                                </div>
+                                <div class="h-[4px] w-[4px]"> 
+                                    <div class="space-y-1">
+                                    <img class="w-[4px] h-[4px] " src="/images/rectangle_1.svg" /> 
+                                    <img class="w-[4px] h-[4px]" src="/images/rectangle_1.svg" /> 
+                                    <img class="w-[4px] h-[4px]" src="/images/rectangle_1.svg" />
+                                    </div> 
+                                </div>
+                                </div>
                             </div>
 
                             <!-- Drop down -->
-                            <div v-show="showDropDown" class="absolute right-[65px] z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                            <div v-show="showDropDown" class="absolute right-[35px] z-10 mt-2 w-48 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                                 <div class="py-1 text-left" role="none">
                                     <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
                                     <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">Account settings</a>
