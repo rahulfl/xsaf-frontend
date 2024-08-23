@@ -198,7 +198,12 @@ export default {
             this.currentPage = page;
             if(page == 1){
                 this.showingData[0] = 1;
-                this.showingData[1] = this.itemsPerPage;
+                if(this.items.length<this.itemsPerPage){
+                    this.showingData[1] = this.items.length;
+                }
+                else{
+                    this.showingData[1] = this.itemsPerPage;
+                }
             }
             else{
                 this.showingData[1] = page*this.itemsPerPage;
@@ -244,7 +249,12 @@ export default {
                     }
                 }
                 this.showingData[0] = 1;
-                this.showingData[1] = this.itemsPerPage;
+                if(this.items.length<this.itemsPerPage){
+                    this.showingData[1] = this.items.length;
+                }
+                else{
+                    this.showingData[1] = this.itemsPerPage;
+                }
             } 
             catch (error) {
                 console.error(error);
