@@ -48,7 +48,7 @@
 
             <div class="h-[87px] w-[300px] flex-col justify-start items-start gap-[12px] flex">
                 <label for="uId" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F]">UID</label>
-                <input type="text" id="uId" ref="uId" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] hover:bg-white" placeholder="fihd048485jshdkjhf"/>
+                <input type="text" id="uId" ref="uId" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] hover:bg-white"/>
                 <p id="error" ref="uid_error" class="text-[#EE506D]">{{uid_error}}</p>
             </div>
 
@@ -59,7 +59,7 @@
                             <img class="w-[16.67px] h-[18.33px]" src="/public/images/calendar.svg" alt="image description">
                         </div>
                         <label for="purchaseDate" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Purchase date</label>
-                        <input id="purchaseDate" name="purchaseDate" ref="purchaseDate" type="text" class="bg-[#F8F9FA] font-Manrope border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#74797C] focus:border-[#74797C] active:bg-white focus:bg-white block w-[300px] h-[56px] ps-[16px] hover:bg-white" placeholder="2024-01-20">
+                        <input id="purchaseDate" name="purchaseDate" ref="purchaseDate" type="text" class="bg-[#F8F9FA] font-Manrope border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#74797C] focus:border-[#74797C] active:bg-white focus:bg-white block w-[300px] h-[56px] ps-[16px] hover:bg-white">
                         <p id="error" ref="purchase_date_error" class="text-[#EE506D]">{{purchase_date_error}}</p>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
                             <img class="w-[16.67px] h-[18.33px]" src="/public/images/calendar.svg" alt="image description">
                         </div>
                         <label for="deliveryDate" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Delivery date</label>
-                        <input id="deliveryDate" name="deliveryDate" ref="deliveryDate" type="text" class="bg-[#F8F9FA] font-Manrope border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#74797C] focus:border-[#74797C] active:bg-white focus:bg-white block w-[300px] h-[56px] ps-[16px] hover:bg-white" placeholder="2024-01-22">
+                        <input id="deliveryDate" name="deliveryDate" ref="deliveryDate" type="text" class="bg-[#F8F9FA] font-Manrope border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#74797C] focus:border-[#74797C] active:bg-white focus:bg-white block w-[300px] h-[56px] ps-[16px] hover:bg-white">
                         <p id="error" ref="delivery_date_error" class="text-[#EE506D]">{{delivery_date_error}}</p>
                     </div>
                 </div>
@@ -78,12 +78,12 @@
             <div class="self-stretch justify-start items-start gap-[32px] inline-flex">
                 <div class="w-[300px] flex-col justify-start items-start space-y-[12px] inline-flex">
                     <label for="fuel" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Fuel</label>
-                    <input type="text" id="fuel" ref="fuel" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] hover:bg-white" placeholder="kerosene"/>
+                    <input type="text" id="fuel" ref="fuel" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] hover:bg-white"/>
                     <p id="error" ref="fuel_error" class="text-[#EE506D]">{{fuel_error}}</p>
                 </div>
                 <div class="w-[300px] flex-col justify-start items-start gap-3 inline-flex">
                     <label for="location" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Location</label>
-                    <input type="text" id="location" ref="location" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] hover:bg-white" placeholder="Zurich"/>
+                    <input type="text" id="location" ref="location" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] hover:bg-white"/>
                     <p id="error" ref="location_error" class="text-[#EE506D]">{{location_error}}</p>
                 </div>
             </div>
@@ -96,7 +96,7 @@
                                 <div class="text-[12px] pl-56 pt-3 text-[#0F0F0F]">tonne</div>
                             </div>
                             <label for="quantity" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Quantity</label>
-                            <input type="text" id="quantity" ref="quantity" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] pr-[66px] hover:bg-white" placeholder="X.X"/>
+                            <input type="text" id="quantity" ref="quantity" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] pr-[66px] hover:bg-white"/>
                         </div>
                     </div>
                     <p id="error" ref="quantity_error" class="text-[#EE506D]">{{quantity_error}}</p>
@@ -108,7 +108,7 @@
                                 <div class="text-[12px] pl-[200px] pt-3 text-[#0F0F0F]">USD/tonne</div>
                             </div>
                             <label for="price" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Price</label>
-                            <input type="text" id="price" ref="price" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 active:bg-white focus:bg-white focus:border-[#DDDDDD] block w-[300px] h-[56px] p-[16px] pr-[90px] hover:bg-white" placeholder="X.X"/>
+                            <input type="text" id="price" ref="price" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 active:bg-white focus:bg-white focus:border-[#DDDDDD] block w-[300px] h-[56px] p-[16px] pr-[90px] hover:bg-white"/>
                         </div>
                     </div>
                     <p id="error" ref="price_error" class="text-[#EE506D]">{{price_error}}</p>
@@ -127,7 +127,7 @@
                 </div>
                 <div class="w-[300px] flex-col justify-start items-start space-y-[12px] inline-flex">
                     <label for="trackingId" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Tracking ID</label>
-                    <input type="text" id="trackingId" ref="trackingId" class="bg-[#FFFFFF] border border-[#EE506D] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 active:bg-white focus:bg-white focus:border-[#DDDDDD] block w-[300px] h-[56px] p-[16px] pr-[90px] hover:bg-white" placeholder="rhif348ffjs"/>
+                    <input type="text" id="trackingId" ref="trackingId" class="bg-[#FFFFFF] border border-[#EE506D] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 active:bg-white focus:bg-white focus:border-[#DDDDDD] block w-[300px] h-[56px] p-[16px] pr-[90px] hover:bg-white"/>
                     <p id="error" ref="tracking_id_error" class="text-[#EE506D]">{{tracking_id_error}}</p>
                 </div>
             </div>
@@ -155,7 +155,7 @@
 
             <div class="h-[87px] w-[300px] flex-col justify-start items-start space-y-[12px] flex">
                 <label for="cdrId" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F]">CDR ID</label>
-                <input type="text" id="cdrId" ref="cdrId" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] hover:bg-white" placeholder="hsdg3443dfdfd"/>
+                <input type="text" id="cdrId" ref="cdrId" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] hover:bg-white"/>
                 <p id="error" ref="cdr_id_error" class="text-[#EE506D]">{{cdr_id_error}}</p>
             </div>
 
@@ -166,7 +166,7 @@
                             <div class="text-[12px] pl-[230px] pt-3 text-[#0F0F0F]">CO2/t</div>
                         </div>
                         <label for="carbonIntensityUpstream" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Carbon intensity upstream</label>
-                        <input type="text" id="carbonIntensityUpstream" ref="carbonIntensityUpstream" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 active:bg-white focus:bg-white focus:border-[#DDDDDD] block w-[300px] h-[56px] p-[16px] pr-[60px] hover:bg-white" placeholder="X.X"/>
+                        <input type="text" id="carbonIntensityUpstream" ref="carbonIntensityUpstream" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 active:bg-white focus:bg-white focus:border-[#DDDDDD] block w-[300px] h-[56px] p-[16px] pr-[60px] hover:bg-white"/>
                     </div>
                 </div>
                 <p id="error" ref="carbon_intensity_upstream_error" class="text-[#EE506D]">{{carbon_intensity_upstream_error}}</p>
@@ -179,7 +179,7 @@
                             <div class="text-[12px] pl-[230px] pt-3 text-[#0F0F0F]">tonne</div>
                         </div>
                         <label for="carbonRemoved" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Carbon removed</label>
-                        <input type="text" id="carbonRemoved" ref="carbonRemoved" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 active:bg-white focus:bg-white focus:border-[#DDDDDD] block w-[300px] h-[56px] p-[16px] pr-[60px] hover:bg-white" placeholder="X.X"/>
+                        <input type="text" id="carbonRemoved" ref="carbonRemoved" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 active:bg-white focus:bg-white focus:border-[#DDDDDD] block w-[300px] h-[56px] p-[16px] pr-[60px] hover:bg-white"/>
                     </div>
                 </div>
                 <p id="error" ref="carbon_removed_error" class="text-[#EE506D]">{{carbon_removed_error}}</p>
@@ -291,6 +291,7 @@ export default {
     async created() {
         let token = localStorage.getItem('token');
         if(token){
+            localStorage.setItem('redirect','add-transactions');
             try {
                 // Dropdowns
                 const response_customer = await axios.get('customer');

@@ -189,7 +189,7 @@ export default {
             this.$router.push(
                     { 
                         path: '/edit-transactions', 
-                        query: { id: 1,}
+                        query: { id: t_id,}
                     } 
                 );
         },
@@ -227,6 +227,7 @@ export default {
     async created() {
         let token = localStorage.getItem('token');
         if(token){
+            localStorage.setItem('redirect','transactions');
             try {
                 const response = await axios.get('transaction');
                 this.transactions = response.data;

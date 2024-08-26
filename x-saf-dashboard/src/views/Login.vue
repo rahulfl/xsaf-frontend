@@ -50,7 +50,8 @@ export default{
     async created() {
         let token = localStorage.getItem('token');
         if(token){
-            this.$router.push('/transactions');
+            let redirect = localStorage.getItem('redirect');
+            this.$router.push('/'+ redirect);
         }
     },
     data() {
