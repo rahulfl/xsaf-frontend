@@ -366,7 +366,6 @@ export default {
             customer_errors: [],
             customer_name_error: null,
             customer_email_error: null,
-            customer_phone_error: null,
             customer_error: null,
             uid_error: null,
             purchase_date_error: null,
