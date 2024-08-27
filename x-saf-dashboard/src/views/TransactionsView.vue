@@ -197,7 +197,7 @@ export default {
         if (page >= 1 && page <= this.totalPages) {
             this.currentPage = page;
             if(page == 1){
-                this.showingData[0] = 1;
+                if(this.items.length == 0){this.showingData[0] = 0;} else {this.showingData[0] = 1;}
                 if(this.items.length<this.itemsPerPage){
                     this.showingData[1] = this.items.length;
                 }
@@ -234,13 +234,19 @@ export default {
                 response.data.data.forEach((value, index) => {
                 this.items.push(value);
                 });
+                
+                //Pagination
+                if(this.items.length == 0){this.showingData[0] = 0;} else {this.showingData[0] = 1;}
+                if(this.items.length<this.itemsPerPage){
+                    this.showingData[1] = this.items.length;
+                }
+                else{
+                    this.showingData[1] = this.itemsPerPage;
+                }
 
                 for(let i=0;i<response.data.data.length;i++){
                     const cust = await axios.get('customer/'+response.data.data[i].customer_id);
                     this.transactions.data[i].customer_name = cust.data.data[0].name;
-
-                    const trader = await axios.get('trader/'+response.data.data[i].trader_id);
-                    this.transactions.data[i].trader_name = trader.data.data.name;
 
                     const supplier = await axios.get('supplier');
                     for(let j=0;j<supplier.data.data.length;j++){
@@ -248,13 +254,9 @@ export default {
                             this.transactions.data[i].supplier_name = supplier.data.data[j].name;
                         }
                     }
-                }
-                this.showingData[0] = 1;
-                if(this.items.length<this.itemsPerPage){
-                    this.showingData[1] = this.items.length;
-                }
-                else{
-                    this.showingData[1] = this.itemsPerPage;
+
+                    //const trader = await axios.get('trader/'+response.data.data[i].trader_id);
+                    //this.transactions.data[i].trader_name = trader.data.data.name;
                 }
             } 
             catch (error) {
