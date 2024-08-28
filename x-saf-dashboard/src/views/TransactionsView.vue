@@ -120,7 +120,7 @@
                     </div>
                 </td>
                 <td class="pr-[16px] py-[16px] pl-[24px]">
-                    {{transaction.customer_name}}
+                    {{transaction.customer.name}}
                 </td>
                 <td class="pr-[16px] py-[16px] pl-[24px]">
                     {{transaction.purchase_date}}
@@ -132,10 +132,10 @@
                     {{transaction.quantity}}
                 </td>
                 <td class="pr-[16px] py-[16px] pl-[24px]">
-                    {{transaction.supplier_name}}
+                    {{transaction.transaction_cdr_detail.cdr_provider}}
                 </td>
                 <td class="pr-[16px] py-[16px] pl-[24px]">
-                    {{transaction.trader_name}}
+                    {{transaction.trader}}
                 </td>
                 <td class="pr-[16px] py-[16px] pl-[24px] text-end">
                     <button type="button" class="w-[78px] h-[37px] text-[#74797C] bg-white border border-[#74797C] focus:outline-none hover:bg-[#F8F9FA] focus:ring-0 focus:ring-[#74797C] font-medium rounded-[4px] text-[14px] px-[16px] py-[8px] me-[8px]">Details</button>
@@ -230,9 +230,11 @@ export default {
             localStorage.setItem('redirect','transactions');
             try {
                 const response = await axios.get('transaction');
-                this.transactions = response.data;
+                this.transactions = response.data; 
                 response.data.data.forEach((value, index) => {
-                this.items.push(value);
+                    if(value.trader != null){value.trader = value.trader.name;}
+                    if(value.transaction_cdr_detail.cdr_provider != null){value.transaction_cdr_detail.cdr_provider = value.transaction_cdr_detail.cdr_provider.name;}
+                    this.items.push(value);
                 });
                 
                 //Pagination
@@ -244,20 +246,6 @@ export default {
                     this.showingData[1] = this.itemsPerPage;
                 }
 
-                for(let i=0;i<response.data.data.length;i++){
-                    const cust = await axios.get('customer/'+response.data.data[i].customer_id);
-                    this.transactions.data[i].customer_name = cust.data.data[0].name;
-
-                    const supplier = await axios.get('supplier');
-                    for(let j=0;j<supplier.data.data.length;j++){
-                        if(response.data.data[i].transaction_cdr_detail.cdr_provider_id == supplier.data.data[j].id){
-                            this.transactions.data[i].supplier_name = supplier.data.data[j].name;
-                        }
-                    }
-
-                    //const trader = await axios.get('trader/'+response.data.data[i].trader_id);
-                    //this.transactions.data[i].trader_name = trader.data.data.name;
-                }
             } 
             catch (error) {
                 console.error(error);
