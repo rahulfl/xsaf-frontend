@@ -62,32 +62,40 @@
                                             </button>
                                         </div>
                                         <!-- Modal body -->
-                                        <div class="p-4 md:p-5 space-y-4">
-                                            <div class="h-[87px] justify-start items-center gap-[12px] flex">
-                                                <label for="customer_name" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F]">Name</label>
-                                                <input type="text" id="customer_name" ref="customer_name" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] hover:bg-white"/>
-                                                <p id="customer_errors" ref="customer_name_error" class="text-[#EE506D]">{{customer_name_error}}</p>
+                                        <div class="p-4 md:p-5 space-y-4 bg-[#F8F9FA] font-Manrope">
+                                            <div class="self-stretch justify-start items-start gap-[32px] inline-flex">
+                                                <div class="w-[300px] flex-col justify-start items-start space-y-[12px] inline-flex">
+                                                    <label for="customer_name" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Name</label>
+                                                    <input type="text" id="customer_name" ref="customer_name" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] hover:bg-white"/>
+                                                    <p id="customer_errors" ref="customer_name_error" class="text-[#EE506D]">{{customer_name_error}}</p>
+                                                </div>
+                                                <div class="w-[300px] flex-col justify-start items-start gap-3 inline-flex">
+                                                    <label for="customer_contact_person" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Contact person</label>
+                                                    <input type="text" id="customer_contact_person" ref="customer_contact_person" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] hover:bg-white"/>
+                                                </div>
                                             </div>
-                                            <div class="h-[87px] justify-start items-center gap-[12px] flex">
-                                                <label for="customer_email" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F]">Email</label>
-                                                <input type="text" id="customer_email" ref="customer_email" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] hover:bg-white"/>
-                                                <p id="customer_errors" ref="customer_email_error" class="text-[#EE506D]">{{customer_email_error}}</p>
+
+                                            <div class="self-stretch justify-start items-start gap-[32px] inline-flex">
+                                                <div class="w-[300px] flex-col justify-start items-start space-y-[12px] inline-flex">
+                                                    <label for="customer_email" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Email</label>
+                                                    <input type="text" id="customer_email" ref="customer_email" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] hover:bg-white"/>
+                                                    <p id="customer_errors" ref="customer_email_error" class="text-[#EE506D]">{{customer_email_error}}</p>
+                                                </div>
+                                                <div class="w-[300px] flex-col justify-start items-start gap-3 inline-flex">
+                                                    <label for="customer_phone" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Phone</label>
+                                                    <input type="text" id="customer_phone" ref="customer_phone" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] hover:bg-white"/>
+                                                </div>
                                             </div>
-                                            <div class="h-[87px] justify-start items-center gap-[12px] flex">
-                                                <label for="customer_phone" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F]">Phone</label>
-                                                <input type="text" id="customer_phone" ref="customer_phone" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] hover:bg-white"/>
-                                            </div>
-                                            <div class="h-[87px] justify-start items-center gap-[12px] flex">
-                                                <label for="customer_contact_person" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F]">Contact person</label>
-                                                <input type="text" id="customer_contact_person" ref="customer_contact_person" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] hover:bg-white"/>
-                                            </div>
-                                            <div class="h-[87px] justify-start items-center gap-[12px] flex">
-                                                <label for="customer_address" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F]">Address</label>
-                                                <input type="text" id="customer_address" ref="customer_address" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] hover:bg-white"/>
-                                            </div>
-                                            <div class="h-[87px] justify-start items-center gap-[12px] flex">
-                                                <label for="customer_country_id" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F]">Country id</label>
-                                                <input type="text" id="customer_country_id" ref="customer_country_id" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] hover:bg-white"/>
+
+                                            <div class="self-stretch justify-start items-start gap-[32px] inline-flex">
+                                                <div class="w-[300px] flex-col justify-start items-start space-y-[12px] inline-flex">
+                                                    <label for="customer_address" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Address</label>
+                                                    <input type="text" id="customer_address" ref="customer_address" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] hover:bg-white"/>
+                                                </div>
+                                                <div class="w-[300px] flex-col justify-start items-start gap-3 inline-flex">
+                                                    <label for="customer_country_id" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Country code</label>
+                                                    <input type="text" id="customer_country_id" ref="customer_country_id" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] hover:bg-white"/>
+                                                </div>
                                             </div>
                                         </div>
                                         <!-- Modal footer -->
@@ -133,7 +141,6 @@
                 <div class="w-[300px] flex-col justify-start items-start gap-3 inline-flex">
                     <label for="location" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Location</label>
                     <input type="text" id="location" ref="location" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] hover:bg-white"/>
-                    
                 </div>
             </div>
 
@@ -160,9 +167,7 @@
                             <input type="text" id="price" ref="price" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 active:bg-white focus:bg-white focus:border-[#DDDDDD] block w-[300px] h-[56px] p-[16px] pr-[90px] hover:bg-white"/>
                         </div>
                     </div>
-                    
                 </div>
-                
             </div>
 
             <div class="self-stretch justify-start items-start gap-[32px] inline-flex">
@@ -172,12 +177,10 @@
                             <option selected>Select</option>
                             <option v-for="trade in trader.data" :key="trade.id" :value="trade.id">{{trade.name}}</option>
                     </select>
-                    
                 </div>
                 <div class="w-[300px] flex-col justify-start items-start space-y-[12px] inline-flex">
                     <label for="trackingId" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Tracking ID</label>
                     <input type="text" id="trackingId" ref="trackingId" class="bg-[#FFFFFF] border border-[#EE506D] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 active:bg-white focus:bg-white focus:border-[#DDDDDD] block w-[300px] h-[56px] p-[16px] pr-[90px] hover:bg-white"/>
-                    
                 </div>
             </div>
 
@@ -205,7 +208,6 @@
             <div class="h-[87px] w-[300px] flex-col justify-start items-start space-y-[12px] flex">
                 <label for="cdrId" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F]">CDR ID</label>
                 <input type="text" id="cdrId" ref="cdrId" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] hover:bg-white"/>
-                
             </div>
 
             <div class="h-[87px] w-[350px] flex-col justify-start items-start space-y-[12px] flex">
@@ -218,7 +220,6 @@
                         <input type="text" id="carbonIntensityUpstream" ref="carbonIntensityUpstream" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 active:bg-white focus:bg-white focus:border-[#DDDDDD] block w-[300px] h-[56px] p-[16px] pr-[60px] hover:bg-white"/>
                     </div>
                 </div>
-                
             </div>
 
             <div class="h-[87px] w-[300px] flex-col justify-start items-start space-y-[12px] flex">
@@ -231,7 +232,6 @@
                         <input type="text" id="carbonRemoved" ref="carbonRemoved" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 active:bg-white focus:bg-white focus:border-[#DDDDDD] block w-[300px] h-[56px] p-[16px] pr-[60px] hover:bg-white"/>
                     </div>
                 </div>
-                
             </div>
         </div>
         <div class="w-full h-[44px] justify-end items-center flex pt-[230px]">

@@ -51,7 +51,12 @@ export default{
         let token = localStorage.getItem('token');
         if(token){
             let redirect = localStorage.getItem('redirect');
-            this.$router.push('/'+ redirect);
+            if(redirect!= null){
+                this.$router.push('/'+ redirect);
+            }
+            else{
+                this.$router.push('/');
+            }
         }
     },
     data() {
