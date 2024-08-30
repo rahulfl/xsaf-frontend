@@ -234,7 +234,7 @@
                 </div>
             </div>
         </div>
-        <div class="w-full h-[44px] justify-end items-center flex pt-[230px]">
+        <div class="w-full h-[44px] justify-end items-center flex pt-[120px]">
                 <div class="justify-end items-center gap-[16px] flex">
                     <button @click="goToTransactionsPage" type="button" class="w-[78px] h-[44px] text-[#74797C] bg-[#F8F9FA] border border-[#74797C] hover:bg-[#DDDDDD] focus:ring-0 font-medium text-[14px] rounded-[4px] px-[16px] py-[10px]">Cancel</button>
                     <button @click="submitForm" type="button" class="w-[143px] h-[44px] text-white text-[14px] bg-[#12B87C] hover:bg-emerald-400 focus:ring-0 font-medium rounded-[4px] text-[14px] px-[16px] py-[10px]">Save transaction</button>
