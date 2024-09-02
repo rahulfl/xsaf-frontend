@@ -41,7 +41,69 @@
                         <div class="absolute inset-y-0 flex items-center pl-[12px] pointer-events-none">
                             <img class="w-[20px] h-[20px]" src="/public/images/add_green.svg" alt="image description">
                         </div>
-                        <button @click="" type="button" class="w-[112px] h-[44px] text-[#12B87C] bg-[#F8F9FA] border border-[#12B87C] focus:outline-none focus:ring-0 focus:ring-[#12B87C] font-medium text-[14px] py-[10px] pl-[12px] rounded-[4px] hover:bg-green-100">Add new</button>
+                        <!-- Modal toggle -->
+                        <button data-modal-target="default-modal" data-modal-toggle="default-modal" type="button" @click="clearFields" class="w-[112px] h-[44px] text-[#12B87C] bg-[#F8F9FA] border border-[#12B87C] focus:outline-none focus:ring-0 focus:ring-[#12B87C] font-medium text-[14px] py-[10px] pl-[12px] rounded-[4px] hover:bg-green-100">Add new</button>           
+                            <!-- Main modal for add new customer popup-->
+                            <div id="default-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full font-Manrope font-medium">
+                                <div class="relative p-4 w-[700px] h-[600px] overflow-y-auto">
+                                    <!-- Modal content -->
+                                    <div class="relative bg-white rounded-lg shadow">
+                                        <!-- Modal header -->
+                                        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+                                            <h3 class="text-[#0F0F0F] text-[20px] font-medium font-Manrope">
+                                                Add Customer
+                                            </h3>
+                                            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="default-modal">
+                                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                                </svg>
+                                                <span class="sr-only">Close modal</span>
+                                            </button>
+                                        </div>
+                                        <!-- Modal body -->
+                                        <div class="p-4 md:p-5 space-y-4 bg-[#F8F9FA] font-Manrope">
+                                            <div class="self-stretch justify-start items-start gap-[32px] inline-flex">
+                                                <div class="w-[300px] flex-col justify-start items-start space-y-[12px] inline-flex">
+                                                    <label for="customer_name" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Name</label>
+                                                    <input type="text" id="customer_name" ref="customer_name" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] hover:bg-white"/>
+                                                    <p id="customer_errors" ref="customer_name_error" class="text-[#EE506D]">{{customer_name_error}}</p>
+                                                </div>
+                                                <div class="w-[300px] flex-col justify-start items-start gap-3 inline-flex">
+                                                    <label for="customer_contact_person" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Contact person</label>
+                                                    <input type="text" id="customer_contact_person" ref="customer_contact_person" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] hover:bg-white"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="self-stretch justify-start items-start gap-[32px] inline-flex">
+                                                <div class="w-[300px] flex-col justify-start items-start space-y-[12px] inline-flex">
+                                                    <label for="customer_email" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Email</label>
+                                                    <input type="text" id="customer_email" ref="customer_email" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] hover:bg-white"/>
+                                                    <p id="customer_errors" ref="customer_email_error" class="text-[#EE506D]">{{customer_email_error}}</p>
+                                                </div>
+                                                <div class="w-[300px] flex-col justify-start items-start gap-3 inline-flex">
+                                                    <label for="customer_phone" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Phone</label>
+                                                    <input type="text" id="customer_phone" ref="customer_phone" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] hover:bg-white"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="self-stretch justify-start items-start gap-[32px] inline-flex">
+                                                <div class="w-[300px] flex-col justify-start items-start space-y-[12px] inline-flex">
+                                                    <label for="customer_address" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Address</label>
+                                                    <input type="text" id="customer_address" ref="customer_address" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] hover:bg-white"/>
+                                                </div>
+                                                <div class="w-[300px] flex-col justify-start items-start gap-3 inline-flex">
+                                                    <label for="customer_country_id" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Country code</label>
+                                                    <input type="text" id="customer_country_id" ref="customer_country_id" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] hover:bg-white"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Modal footer -->
+                                        <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b justify-end">
+                                            <button @click="submitCustomerForm" type="button" class="w-[143px] h-[44px] text-white text-[14px] bg-[#12B87C] hover:bg-emerald-400 focus:ring-0 font-medium rounded-[4px] text-[14px] px-[16px] py-[10px]">Save customer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                     </div> 
                 </div>
             </div>
@@ -251,7 +313,42 @@ export default {
                     if(this.errors.cdr_provider_id){this.cdr_provider_id_error = this.errors.cdr_provider_id[0];} else if(this.errors.cdr_provider_id==undefined){this.cdr_provider_id_error = "";}
                 }
             });
-            
+        },
+        clearFields(){
+            this.customer_name_error = "";
+            this.customer_email_error = "";
+         
+            this.$refs.customer_name.value = "";
+            this.$refs.customer_email.value = "";
+            this.$refs.customer_phone.value = "";
+            this.$refs.customer_contact_person.value = "";
+            this.$refs.customer_address.value = "";
+            this.$refs.customer_country_id.value = "";
+        },
+        submitCustomerForm(){
+            axios.post('customer', 
+               {
+                    "name": this.$refs.customer_name.value,
+                    "email": this.$refs.customer_email.value,
+                    "phone_no": this.$refs.customer_phone.value,
+                    "contact_person_name": this.$refs.customer_contact_person.value,
+                    "address": this.$refs.customer_address.value,
+                    "country_id": this.$refs.customer_country_id.value,
+                }
+            )
+            .then(response => {
+                const modal = new window.Modal(document.getElementById('default-modal'));
+                modal.hide();
+                window.location.reload();
+            })
+            .catch(error => {
+                // Handle errors
+                this.customer_errors = error.response.data.data;
+                if(this.errors){
+                    if(this.customer_errors.name){this.customer_name_error = this.customer_errors.name[0];} else if(this.customer_errors.name==undefined){this.customer_name_error = "";}
+                    if(this.customer_errors.email){this.customer_email_error = this.customer_errors.email[0];} else if(this.customer_errors.email==undefined){this.customer_email_error = "";}
+                }
+            });
         }
     },
     data() {
