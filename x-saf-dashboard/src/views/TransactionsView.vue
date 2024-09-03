@@ -56,7 +56,7 @@
             <tr>
                 <th scope="col" class="pl-[24px]">
                     <div class="flex items-center">
-                        <input id="checkbox-all-search" type="checkbox" class="w-[15px] h-[15px] bg-[#F3F3F4] border-[#74797C] focus:[#1983FF] focus:ring-0 hover:ring-1 hover:border-[#1983FF]">
+                        <input id="checkbox-all-search" type="checkbox" :checked="allPageSelected" @change="selectAllRowsOnPage($event)" class="w-[15px] h-[15px] bg-[#F3F3F4] border-[#74797C] focus:[#1983FF] focus:ring-0 hover:ring-1 hover:border-[#1983FF]">
                     </div>
                 </th>
                 <th scope="col" class="font-medium px-6 py-3">
@@ -108,38 +108,40 @@
                     </div>
                 </th>
                 <th scope="col" class="font-medium py-3">
-                    <div class="text-[#EE506D] text-[14px] text-end font-medium font-Manrope">Delete selected (4)</div>
+                    <div class="text-[#EE506D] text-[14px] text-end font-medium font-Manrope">
+                        <button @click="deleteSelectedRows">Delete selected ({{ selectedRows.length }})</button>
+                    </div>
                 </th>
             </tr>
         </thead>
         <tbody>
-            <tr v-for="transaction in paginatedItems" :key="transaction.id" class="bg-white text-[#0F0F0F] h-[69px] font-Manrope font-medium">
+            <tr v-for="(row,index) in paginatedItems" :key="row.id" class="bg-white text-[#0F0F0F] h-[69px] font-Manrope font-medium">
                 <td class="pr-[16px] py-[16px] pl-[24px]">
                     <div class="flex items-center">
-                        <input id="checkbox-delete" type="checkbox" class="w-[15px] h-[15px] bg-[#F3F3F4] border-[#74797C] focus:[#1983FF] focus:ring-0 hover:ring-1 hover:border-[#1983FF]">
+                        <input id="checkbox-delete" type="checkbox" v-model="selectedRows" :value="row.id"  class="w-[15px] h-[15px] bg-[#F3F3F4] border-[#74797C] focus:[#1983FF] focus:ring-0 hover:ring-1 hover:border-[#1983FF]">
                     </div>
                 </td>
                 <td class="pr-[16px] py-[16px] pl-[24px]">
-                    {{transaction.customer.name}}
+                    {{row.customer.name}}
                 </td>
                 <td class="pr-[16px] py-[16px] pl-[24px]">
-                    {{transaction.purchase_date}}
+                    {{row.purchase_date}}
                 </td>
                 <td class="pr-[16px] py-[16px] pl-[24px]">
-                    {{transaction.delivery_date}}
+                    {{row.delivery_date}}
                 </td>
                 <td class="pr-[16px] py-[16px] pl-[24px]">
-                    {{transaction.quantity}}
+                    {{row.quantity}}
                 </td>
                 <td class="pr-[16px] py-[16px] pl-[24px]">
-                    {{transaction.transaction_cdr_detail.cdr_provider}}
+                    {{row.transaction_cdr_detail.cdr_provider}}
                 </td>
                 <td class="pr-[16px] py-[16px] pl-[24px]">
-                    {{transaction.trader}}
+                    {{row.trader}}
                 </td>
                 <td class="pr-[16px] py-[16px] pl-[24px] text-end">
                     <button type="button" class="w-[78px] h-[37px] text-[#74797C] bg-white border border-[#74797C] focus:outline-none hover:bg-[#F8F9FA] focus:ring-0 focus:ring-[#74797C] font-medium rounded-[4px] text-[14px] px-[16px] py-[8px] me-[8px]">Details</button>
-                    <button type="button" @click="EditTransactions(transaction.id)" class="w-[58px] h-[37px] text-[#12B87C] bg-white border border-[#12B87C] focus:outline-none hover:bg-green-50 focus:ring-0 focus:ring-[#74797C] font-medium rounded-[4px] text-[14px] px-[16px] py-[8px]">Edit</button>
+                    <button type="button" @click="EditTransactions(row.id)" class="w-[58px] h-[37px] text-[#12B87C] bg-white border border-[#12B87C] focus:outline-none hover:bg-green-50 focus:ring-0 focus:ring-[#74797C] font-medium rounded-[4px] text-[14px] px-[16px] py-[8px]">Edit</button>
                 </td>
             </tr>
         </tbody>
@@ -178,10 +180,69 @@ export default {
     name: "TransactionsView",
     props: ['items','showingData'],
     setup() {
-            const router = useRouter();
-            return { router };
-        },
+        const router = useRouter();
+        return { router };
+    },
     methods: {
+        adjustPaginationAfterDelete() {
+            if (this.currentPage > this.totalPages) {
+                this.currentPage = this.totalPages;
+            }
+
+            //Adjust pagination
+            if(this.currentPage == 0){
+                this.showingData[0] = 0;
+                this.showingData[1] = 0;
+            }
+            else if(this.currentPage == 1){
+                this.pagination();
+            }
+            else{
+                this.showingData[1] = this.currentPage*this.itemsPerPage;
+                this.showingData[0] = this.showingData[1]-this.itemsPerPage+1;
+                if(this.showingData[1]>this.items.length){
+                    this.showingData[1] =this.items.length;
+                }
+            }
+        },
+        selectAllRowsOnPage(event) {
+            const pageRowIds = this.paginatedItems.map(row => row.id);
+            if (event.target.checked) {
+                // Select all rows on the current page
+                this.selectedRows = [...new Set([...this.selectedRows, ...pageRowIds])];
+            } else {
+                // Deselect all rows on the current page
+                this.selectedRows = this.selectedRows.filter(id => !pageRowIds.includes(id));
+            }
+        },
+        async deleteSelectedRows() {
+            if (this.selectedRows.length === 0) {
+                //alert('No rows selected for deletion.');
+                return;
+            }
+            try {
+                this.deleteArr = [];
+                this.selectedRows.forEach((item, index) => {
+                    this.deleteArr.push(item);
+                }); 
+
+                const response = await axios.post('transaction/deleteSelected', {
+                    "ids": this.deleteArr
+                });
+
+                if (response.status === 200) {
+                    this.items = this.items.filter(row => !this.selectedRows.includes(row.id));
+                    this.selectedRows = [];
+                    this.adjustPaginationAfterDelete();
+                    this.deleteArr = [];
+                } else {
+                    alert('Failed to delete selected rows.');
+                }
+            } catch (error) {
+                //console.error('Error deleting rows:', error);
+                //alert('An error occurred while deleting the rows.');
+            }
+        },
         goToAddTransactionsPage() {
             this.$router.push("/add-transactions");
         },
@@ -193,26 +254,29 @@ export default {
                     } 
                 );
         },
-        changePage(page) {
-        if (page >= 1 && page <= this.totalPages) {
-            this.currentPage = page;
-            if(page == 1){
-                if(this.items.length == 0){this.showingData[0] = 0;} else {this.showingData[0] = 1;}
-                if(this.items.length<this.itemsPerPage){
-                    this.showingData[1] = this.items.length;
-                }
-                else{
-                    this.showingData[1] = this.itemsPerPage;
-                }
+        pagination(){
+            if(this.items.length == 0){this.showingData[0] = 0;} else {this.showingData[0] = 1;}
+            if(this.items.length<this.itemsPerPage){
+                this.showingData[1] = this.items.length;
             }
             else{
-                this.showingData[1] = page*this.itemsPerPage;
-                this.showingData[0] = this.showingData[1]-this.itemsPerPage+1;
-                if(this.showingData[1]>this.items.length){
-                    this.showingData[1] =this.items.length;
+                this.showingData[1] = this.itemsPerPage;
+            }
+        },
+        changePage(page) {
+            if (page >= 1 && page <= this.totalPages) {
+                this.currentPage = page;
+                if(page == 1){
+                   this.pagination();
+                }
+                else{
+                    this.showingData[1] = page*this.itemsPerPage;
+                    this.showingData[0] = this.showingData[1]-this.itemsPerPage+1;
+                    if(this.showingData[1]>this.items.length){
+                        this.showingData[1] =this.items.length;
+                    }
                 }
             }
-        }
         },
     },
     data() {
@@ -221,7 +285,9 @@ export default {
             items: [],
             currentPage: 1,
             itemsPerPage: 7,
-            showingData: []
+            showingData: [],
+            selectedRows: [],
+            deleteArr: []
         };
     },
     async created() {
@@ -236,16 +302,9 @@ export default {
                     if(value.transaction_cdr_detail.cdr_provider != null){value.transaction_cdr_detail.cdr_provider = value.transaction_cdr_detail.cdr_provider.name;}
                     this.items.push(value);
                 });
-                
-                //Pagination
-                if(this.items.length == 0){this.showingData[0] = 0;} else {this.showingData[0] = 1;}
-                if(this.items.length<this.itemsPerPage){
-                    this.showingData[1] = this.items.length;
-                }
-                else{
-                    this.showingData[1] = this.itemsPerPage;
-                }
 
+                //Pagination
+                this.pagination();
             } 
             catch (error) {
                 console.error(error);
@@ -257,12 +316,15 @@ export default {
     },
     computed: {
         totalPages() {
-        return Math.ceil(this.items.length / this.itemsPerPage);
+            return Math.ceil(this.items.length / this.itemsPerPage);
         },
         paginatedItems() {
-        const start = (this.currentPage - 1) * this.itemsPerPage;
-        return this.items.slice(start, start + this.itemsPerPage);
+            const start = (this.currentPage - 1) * this.itemsPerPage;
+            return this.items.slice(start, start + this.itemsPerPage);
         },
+        allPageSelected() {
+            return this.paginatedItems.length > 0 && this.paginatedItems.every(row => this.selectedRows.includes(row.id));
+        }
     },
 };
 </script>
