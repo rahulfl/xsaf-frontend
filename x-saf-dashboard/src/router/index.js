@@ -46,6 +46,11 @@ const router = createRouter({
                 path: '/suppliers',
                 component: () => import("../views/SuppliersView.vue"),
             },
+            {
+                name: 'Xsaf Protocol',
+                path: '/xsaf-protocol',
+                component: () => import("../views/XsafProtocolView.vue"),
+            },
         ]
     },
     {
