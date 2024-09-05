@@ -1,7 +1,7 @@
 <template>
 
 <!-- heading starts -->
-<div class="justify-between gap-1 flex font-Manrope">
+<div class="justify-between gap-1 flex font-Manrope h-[70px]">
         <div class="h-[38px] justify-start items-center gap-4 flex text-[#0F0F0F] font-medium font-Manrope">
             <div class="w-[32px] h-[32px] relative">
             <img class="w-[32px] h-[32px]" src="/public/images/customers.svg" alt="image description">
@@ -9,10 +9,27 @@
             </div>
             <div class="text-[32px] leading-[38.40px]">Customers</div>
         </div>
-       
 </div>
 <!-- heading ends-->
 
+<!-- ADD NEW CUSTOMER, SEARCH BOX starts-->
+        <div class="pt-[32px] font-Manrope h-[56px] justify-start items-center gap-[16px] flex">
+            <div class="relative">
+                <div class="absolute inset-y-0 flex items-center pl-[16px] pointer-events-none">
+                    <img class="w-[24px] h-[24px]" src="/public/images/add_sign.svg" alt="image description">
+                </div> 
+                <button @click="goToAddCustomerPage" type="button" class="w-[229px] h-[56px] rounded-[4px] pl-[26px] pr-[16px] py-[16px] text-white bg-[#12B87C] text-[16px] font-medium font-Manrope">Add new customer</button>          
+            </div>
+            <form class="">   
+                <div class="relative">
+                    <div class="absolute inset-y-0 start-1 flex items-center ps-[12px] pointer-events-none">
+                        <img class="w-[17.49px] h-[17.49px]" src="/public/images/search.svg" alt="image description">
+                    </div>
+                    <input type="text" id="default-search" class="block w-[300px] h-[56px] rounded-[4px] py-[16px] pr-[12px] pl-[42px] font-medium bg-[#F8F9FA] border-[#DDDDDD] text-[16px] text-[#74797C] hover:bg-white active:bg-white focus:bg-white focus:border-none" placeholder="Search" />
+                </div>
+            </form>
+        </div>      
+<!-- ADD NEW CUSTOMER, SEARCH BOX ends-->
 
 <!--CUSTOMER TABLE starts-->
 <div class="relative overflow-x-auto font-Manrope pt-[32px]">
@@ -110,9 +127,9 @@ export default {
             return { router };
         },
     methods: {
-        //goToAddCustomerPage() {
-            //this.$router.push("/add-customer");
-        //},
+        goToAddCustomerPage() {
+            this.$router.push("/add-customer");
+        },
         //EditCustomer(c_id) {
             //this.$router.push(
             //        { 
@@ -122,26 +139,29 @@ export default {
             //    );
         //},
         changePage(page) {
-        if (page >= 1 && page <= this.totalPages) {
-            this.currentPage = page;
-            if(page == 1){
-                if(this.items.length == 0){this.showingData[0] = 0;} else {this.showingData[0] = 1;}
+            if (page >= 1 && page <= this.totalPages) {
+                this.currentPage = page;
+                if(page == 1){
+                    this.pagination();
+                }
+                else{
+                    this.showingData[1] = page*this.itemsPerPage;
+                    this.showingData[0] = this.showingData[1]-this.itemsPerPage+1;
+                    if(this.showingData[1]>this.items.length){
+                        this.showingData[1] =this.items.length;
+                    }
+                }
+            }
+        },
+        pagination(){
+            if(this.items.length == 0){this.showingData[0] = 0;} else {this.showingData[0] = 1;}
                 if(this.items.length<this.itemsPerPage){
                     this.showingData[1] = this.items.length;
                 }
                 else{
                     this.showingData[1] = this.itemsPerPage;
                 }
-            }
-            else{
-                this.showingData[1] = page*this.itemsPerPage;
-                this.showingData[0] = this.showingData[1]-this.itemsPerPage+1;
-                if(this.showingData[1]>this.items.length){
-                    this.showingData[1] =this.items.length;
-                }
-            }
         }
-        },
     },
     data() {
         return {
@@ -164,13 +184,7 @@ export default {
                 });
                 
                 //Pagination
-                if(this.items.length == 0){this.showingData[0] = 0;} else {this.showingData[0] = 1;}
-                if(this.items.length<this.itemsPerPage){
-                    this.showingData[1] = this.items.length;
-                }
-                else{
-                    this.showingData[1] = this.itemsPerPage;
-                }
+                this.pagination();
             } 
             catch (error) {
                 console.error(error);

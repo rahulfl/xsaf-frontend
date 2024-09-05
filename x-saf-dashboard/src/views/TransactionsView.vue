@@ -244,12 +244,12 @@ export default {
             }
         },
         goToAddTransactionsPage() {
-            this.$router.push("/add-transactions");
+            this.$router.push("/add-transaction");
         },
         EditTransactions(t_id) {
             this.$router.push(
                     { 
-                        path: '/edit-transactions', 
+                        path: '/edit-transaction', 
                         query: { id: t_id,}
                     } 
                 );

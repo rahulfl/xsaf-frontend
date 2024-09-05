@@ -17,7 +17,7 @@
 <div class="relative overflow-x-auto pt-[48px] font-Manrope">
         <div class="w-full h-[68px] flex-col justify-start items-start gap-[24px] inline-flex">
             <div class="self-stretch justify-between items-end inline-flex">
-                <div class="text-[#0F0F0F] text-[20px] font-medium font-Manrope leading-normal">Edit Transactions</div>
+                <div class="text-[#0F0F0F] text-[20px] font-medium font-Manrope leading-normal">Edit Transaction</div>
                 <div class="justify-start items-center gap-[16px] flex">
                     <button @click="goToTransactionsPage" type="button" class="w-[78px] h-[44px] text-[#74797C] bg-[#F8F9FA] border border-[#74797C] hover:bg-[#DDDDDD] focus:ring-0 font-medium text-[14px] rounded-[4px] px-[16px] py-[10px]">Cancel</button>
                     <button @click="submitForm" type="button" class="w-[143px] h-[44px] text-white text-[14px] bg-[#12B87C] hover:bg-emerald-400 focus:ring-0 font-medium rounded-[4px] text-[14px] px-[16px] py-[10px]">Save transaction</button>
@@ -373,7 +373,7 @@ export default {
         let token = localStorage.getItem('token');
         if(token){
             const route = useRoute();
-            localStorage.setItem('redirect','edit-transactions?id='+route.query.id);
+            localStorage.setItem('redirect','edit-transaction?id='+route.query.id);
             try {
                 // Getting the URL parameters and splitting the key and value 
                 let queryString = window.location.search;

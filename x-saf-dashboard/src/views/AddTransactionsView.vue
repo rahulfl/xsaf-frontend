@@ -1,23 +1,22 @@
 <template>
-
-<!-- headings starts-->
-<div class="justify-between gap-1 flex font-Manrope font-medium ">
-        <div class="h-[38px] w-[456.5] justify-start items-center gap-[32px] flex text-[#0F0F0F]">
+<!-- heading starts -->
+<div class="justify-between gap-1 flex font-Manrope h-[70px]">
+        <div class="h-[38px] justify-start items-center gap-4 flex text-[#0F0F0F] font-medium font-Manrope">
             <div class="w-[32px] h-[32px] relative">
                 <svg class="w-[32px] h-[32px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16h13M4 16l4-4m-4 4 4 4M20 8H7m13 0-4 4m4-4-4-4"/>
-                </svg>
+                </svg>            
             </div>
-            <div class="text-[32px] ">Transactions</div>
+            <div class="text-[32px] leading-[38.40px]">Transactions</div>
         </div>
 </div>
-<!-- headings ends-->
+<!-- heading ends-->
 
 <!--- form starts -->
 <div class="relative overflow-x-auto pt-[48px] font-Manrope">
         <div class="w-full h-[68px] flex-col justify-start items-start gap-[24px] inline-flex">
             <div class="self-stretch justify-between items-end inline-flex">
-                <div class="text-[#0F0F0F] text-[20px] font-medium font-Manrope leading-normal">Add Transactions</div>
+                <div class="text-[#0F0F0F] text-[20px] font-medium font-Manrope leading-normal">Add Transaction</div>
                 <div class="justify-start items-center gap-[16px] flex">
                     <button @click="goToTransactionsPage" type="button" class="w-[78px] h-[44px] text-[#74797C] bg-[#F8F9FA] border border-[#74797C] hover:bg-[#DDDDDD] focus:ring-0 font-medium text-[14px] rounded-[4px] px-[16px] py-[10px]">Cancel</button>
                     <button @click="submitForm" type="button" class="w-[143px] h-[44px] text-white text-[14px] bg-[#12B87C] hover:bg-emerald-400 focus:ring-0 font-medium rounded-[4px] text-[14px] px-[16px] py-[10px]">Save transaction</button>
@@ -365,7 +364,7 @@ export default {
     async created() {
         let token = localStorage.getItem('token');
         if(token){
-            localStorage.setItem('redirect','add-transactions');
+            localStorage.setItem('redirect','add-transaction');
             try {
                 // Dropdowns
                 const response_customer = await axios.get('customer');

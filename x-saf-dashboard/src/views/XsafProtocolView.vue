@@ -245,7 +245,7 @@ export default {
     async created() {
         let token = localStorage.getItem('token');
         if(token){
-            localStorage.setItem('redirect','transaction');
+            localStorage.setItem('redirect','xsaf-protocol');
             try {
                 
             } 
@@ -259,22 +259,5 @@ export default {
     },
 };
 </script>
-
-
-<style>
-table{
-    border-collapse: separate;
-    border-spacing: 0 8px;
-}
-
-td:first-child,
-th:first-child {
-    border-radius: 10px 0 0 10px;
-}
-td:last-child,
-th:last-child {
-    border-radius: 0 10px 10px 0;
-}
-</style> 
 
 

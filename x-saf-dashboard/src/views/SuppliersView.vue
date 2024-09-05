@@ -1,11 +1,10 @@
 <template>
 
 <!-- heading begins-->
-<div class="justify-between gap-1 flex font-Manrope">
+<div class="justify-between gap-1 flex font-Manrope h-[70px]">
         <div class="h-[38px] justify-start items-center gap-4 flex text-[#0F0F0F] font-medium font-Manrope">
             <div class="w-[32px] h-[32px] relative">
             <img class="w-[32px] h-[32px]" src="/public/images/suppliers.svg" alt="image description">
-            
             </div>
             <div class="text-[32px] leading-[38.40px]">Suppliers</div>
         </div>
@@ -13,6 +12,24 @@
 </div>
 <!-- heading ends-->
 
+<!-- ADD NEW SUPPLIER, SEARCH BOX starts-->
+        <div class="pt-[32px] font-Manrope h-[56px] justify-start items-center gap-[16px] flex">
+            <div class="relative">
+                <div class="absolute inset-y-0 flex items-center pl-[16px] pointer-events-none">
+                    <img class="w-[24px] h-[24px]" src="/public/images/add_sign.svg" alt="image description">
+                </div> 
+                <button @click="goToAddSupplierPage" type="button" class="w-[229px] h-[56px] rounded-[4px] pl-[26px] pr-[16px] py-[16px] text-white bg-[#12B87C] text-[16px] font-medium font-Manrope">Add new supplier</button>          
+            </div>
+            <form class="">   
+                <div class="relative">
+                    <div class="absolute inset-y-0 start-1 flex items-center ps-[12px] pointer-events-none">
+                        <img class="w-[17.49px] h-[17.49px]" src="/public/images/search.svg" alt="image description">
+                    </div>
+                    <input type="text" id="default-search" class="block w-[300px] h-[56px] rounded-[4px] py-[16px] pr-[12px] pl-[42px] font-medium bg-[#F8F9FA] border-[#DDDDDD] text-[16px] text-[#74797C] hover:bg-white active:bg-white focus:bg-white focus:border-none" placeholder="Search" />
+                </div>
+            </form>
+        </div>      
+<!-- ADD NEW SUPPLIER, SEARCH BOX ends-->
 
 <!--SUPPLIER TABLE starts-->
 <div class="relative overflow-x-auto font-Manrope pt-[32px]">
@@ -81,9 +98,9 @@ export default {
             return { router };
         },
     methods: {
-        //goToAddSupplierPage() {
-            //this.$router.push("/add-supplier");
-        //},
+        goToAddSupplierPage() {
+            this.$router.push("/add-supplier");
+        },
         //EditSupplier(s_id) {
             //this.$router.push(
             //        { 
