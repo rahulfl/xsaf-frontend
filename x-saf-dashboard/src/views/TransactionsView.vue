@@ -464,12 +464,12 @@ export default {
 
 td:first-child,
 th:first-child {
-    border-radius: 20px 0 0 20px;
+    border-radius: 18px 0 0 18px;
 }
 
 td:last-child,
 th:last-child {
-    border-radius: 0 20px 20px 0;
+    border-radius: 0 18px 18px 0;
 }
 
 tr {
@@ -477,15 +477,15 @@ tr {
 }
 
 #hiddentd{
-    border-radius: 0 0 20px 20px;
+    border-radius: 0 0 18px 18px;
 }
 
 tr.highlighted td:first-child {
-    border-radius: 20px 0 0 0;
+    border-radius: 18px 0 0 0;
 }
 
 tr.highlighted td:last-child {
-    border-radius: 0 20px 0 0;
+    border-radius: 0 18px 0 0;
 }
 
 tr.highlighted {
