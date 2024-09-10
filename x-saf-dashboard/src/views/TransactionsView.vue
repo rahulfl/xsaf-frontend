@@ -114,8 +114,8 @@
                 </th>
             </tr>
         </thead>
-        <tbody>
-            <tr v-for="(row,index) in paginatedItems" :key="row.id" class="bg-white text-[#0F0F0F] h-[69px] font-Manrope font-medium">
+        <tbody v-for="(row,index) in paginatedItems" :key="row.id">
+            <tr class="bg-white text-[#0F0F0F] h-[69px] font-Manrope font-medium" :class="{ 'highlighted': isHighlighted(row.id) }">
                 <td class="pr-[16px] py-[16px] pl-[24px]">
                     <div class="flex items-center">
                         <input id="checkbox-delete" type="checkbox" v-model="selectedRows" :value="row.id"  class="w-[15px] h-[15px] bg-[#F3F3F4] border-[#74797C] focus:[#1983FF] focus:ring-0 hover:ring-1 hover:border-[#1983FF]">
@@ -131,7 +131,7 @@
                     {{row.delivery_date}}
                 </td>
                 <td class="pr-[16px] py-[16px] pl-[24px]">
-                    {{row.quantity}}
+                    {{row.quantity}}t
                 </td>
                 <td class="pr-[16px] py-[16px] pl-[24px]">
                     {{row.transaction_cdr_detail.cdr_provider}}
@@ -140,9 +140,100 @@
                     {{row.trader}}
                 </td>
                 <td class="pr-[16px] py-[16px] pl-[24px] text-end">
-                    <button type="button" class="w-[78px] h-[37px] text-[#74797C] bg-white border border-[#74797C] focus:outline-none hover:bg-[#F8F9FA] focus:ring-0 focus:ring-[#74797C] font-medium rounded-[4px] text-[14px] px-[16px] py-[8px] me-[8px]">Details</button>
+                    <button type="button" @click="toggleDetails(row.id)" :disabled="isButtonDisabled(row.id)" class="w-[78px] h-[37px] text-[#74797C] bg-white border border-[#74797C] focus:outline-none hover:bg-[#F8F9FA] focus:ring-0 focus:ring-[#74797C] font-medium rounded-[4px] text-[14px] px-[16px] py-[8px] me-[8px]">{{ getButtonName(row.id)}}</button>
                     <button type="button" @click="EditTransactions(row.id)" class="w-[58px] h-[37px] text-[#12B87C] bg-white border border-[#12B87C] focus:outline-none hover:bg-green-50 focus:ring-0 focus:ring-[#74797C] font-medium rounded-[4px] text-[14px] px-[16px] py-[8px]">Edit</button>
                 </td>
+            </tr>
+
+             <!-- Hidden row to show additional details -->
+            
+            <tr v-if="expandedRows.includes(row.id)" class="bg-white h-[69px]">
+                <td class="hidden"></td>
+                <td colspan="8" id="hiddentd">
+                 <div class="w-full h-[418px] rounded flex-col justify-start items-start gap-y-[16px] inline-flex pt-[12px] pl-[24px] pb-[24px] pr-[24px] font-Manrope">
+                    <div class="w-full h-[182px] space-x-[16px]">
+                        <div class="h-[182px] w-[calc(49.4%)] px-[24px] pt-[24px] pb-[32px] bg-[#F8F9FA] rounded-[4px] flex-col justify-start items-start gap-y-[24px] inline-flex" id="box-shadow">
+                            <div class="h-[19px] w-[560px] text-[#0F0F0F] text-[16px] font-medium font-Manrope leading-tight">{{ row.quantity }}t {{ row.fuel }}</div>
+                            <div class="w-[560px] h-[83px] flex-col justify-start items-start gap-y-[16px] flex font-Manrope">
+                                <div class="h-[17px] w-[560px] self-stretch"><span class="text-[#74797C] text-[14px] font-medium">Carbon intensity upstream: </span><span class="text-[#0F0F0F] text-[14px] font-medium"> {{ row.transaction_cdr_detail.carbon_intensity_upstream }}t co2 ({{row.transaction_cdr_detail.carbon_intensity_upstream/100}} co2/t)</span></div>
+                                <div class="h-[17px] w-[560px] self-stretch"><span class="text-[#74797C] text-[14px] font-medium">Tracking ID: </span><span class="text-[#0F0F0F] text-[14px] font-medium"> {{ row.tracking_id }}</span></div>
+                                <div class="h-[17px] w-[560px] self-stretch"><span class="text-[#74797C] text-[14px] font-medium">Fuel provided by: </span><span class="text-[#0F0F0F] text-[14px] font-medium"> {{ row.trader }}</span></div>
+                            </div>
+                        </div>
+
+                        <div class="h-[182px] w-[calc(49%)] rounded-[4px] px-[24px] pt-[24px] pb-[32px] bg-[#12B87C]/10 flex-col justify-end items-start gap-y-[24px] inline-flex" id="box-shadow">
+                            <div class="h-[19px] w-[433px] text-[#0F0F0F] text-[16px] font-medium leading-tight">{{ row.transaction_cdr_detail.carbon_removed }}t of Carbon Removal</div>
+                            <div class="h-[83px] w-[433px] flex-col justify-start items-start gap-y-[16px] flex">
+                                <div class="h-[17px] w-[433px] self-stretch text-[#74797C] text-[14px] font-medium">Matching Down & Upstream co2 emissions</div>
+                                <div class="h-[17px] w-[433px] self-stretch"><span class="text-[#74797C] text-[14px] font-medium">CDR ID: </span><span class="text-[#0F0F0F] text-[14px] font-medium">{{ row.transaction_cdr_detail.cdr_id }}</span></div>
+                                <div class="h-[17px] w-[433px] self-stretch"><span class="text-[#74797C] text-[14px] font-medium">CDR provided by: </span><span class="text-[#0F0F0F] text-[14px] font-medium">{{ row.transaction_cdr_detail.cdr_provider }}</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full h-[184px] space-x-[16px] inline-flex font-Manrope font-medium">
+                        <div class="h-[184px] w-[calc(33%)] px-[24px] pt-[24px] pb-[32px] bg-[#F8F9FA] rounded-[4px] gap-y-[32px]">
+                            <div class="text-[16px] text-[#0F0F0F]">{{ carbonTotal(rowId) }}t of Kerosene Emissions</div>
+                            <div class="chart-container">
+                                <div class="bar">
+                                    <div class="bar-part bar-value1" :style="{ width: ((carbonUpstream(row.id)/carbonTotal(rowId)) * 100) + '%' }">
+                                        <span></span>
+                                    </div>
+                                    <div class="bar-part bar-value2" :style="{ width: ((carbonDownstream(row.id)/carbonTotal(rowId)) * 100) + '%' }">
+                                        <span></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="label-container">
+                                <div class="label">
+                                    <div class="label-box" style="background-color: #EE506D;"></div>
+                                    <span class="text-[12px] w-[80px]">{{ carbonUpstream(row.id) }}t Upstream</span>
+                                </div>
+                                <div class="label">
+                                    <div class="label-box" style="background-color: #B5334A;"></div>
+                                    <span class="text-[12px] w-[100px]">{{ carbonDownstream(row.id) }}t Downstream</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="h-[184px] w-[calc(33%)] px-[24px] pt-[24px] pb-[32px] bg-[#F8F9FA] rounded-[4px] gap-y-[32px] ">
+                            <div class="text-[16px] text-[#0F0F0F]">{{ row.transaction_cdr_detail.carbon_removed }}t of Carbon Removal</div>
+                            <div class="chart-container">
+                                <div class="bar">
+                                    <div class="bar-part bar-value3" :style="{ width: 100 + '%' }">
+                                        <span></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="label-container">
+                                <div class="label">
+                                    <span class="text-[12px] w-[200px]">Provided by {{ row.transaction_cdr_detail.cdr_provider }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="h-[184px] w-[calc(33%)] px-[24px] pt-[24px] pb-[32px] bg-[#F8F9FA] rounded-[4px] gap-y-[32px] ">
+                            <div class="text-[16px] text-[#0F0F0F]">{{ carbonTotal(rowId) - row.transaction_cdr_detail.carbon_removed }}t of Net Emissions</div>
+                            <div class="chart-container">
+                                <div class="bar">
+                                    <div class="bar-part bar-value4" :style="{ width: 100 + '%' }">
+                                        <span></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="label-container">
+                                <div class="label">
+                                    <span class="text-[12px] w-[200px]">Clean Flight</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </td>
+                <td class="hidden"></td>
             </tr>
         </tbody>
     </table>
@@ -184,6 +275,41 @@ export default {
         return { router };
     },
     methods: {
+        async toggleDetails(rowId) {
+            this.selectedRowId = (this.selectedRowId === rowId) ? null : rowId; // Toggle the selectedRowId to disable other detail buttons
+            const response = await axios.get('transaction/' + rowId);  //Get the transaction for the specific rowID
+            this.value1[rowId] = response.data.data[0];  //Send this value for carbon emission calculations
+            const index = this.expandedRows.indexOf(rowId);
+            if (index === -1) {
+                this.expandedRows.push(rowId);  // Add row ID to expandedRows array if not present
+            } else {
+                this.expandedRows.splice(index, 1);  // Remove row ID if already present
+            }
+        },
+        isHighlighted(rowId) {
+            return this.expandedRows.includes(rowId);  //To change settings when the row is expanded on click of details button
+        },
+        getButtonName(rowId){
+            return this.expandedRows.includes(rowId) ? 'Close' : 'Details';  //Change the name of the details button 
+        },
+        carbonUpstream(rowId) {  //Calculate the carbon upstream value for the first bar chart
+            if(this.value1[rowId].quantity!=null && this.value1[rowId].transaction_cdr_detail.carbon_intensity_upstream!=null){
+                this.carbonUpstream1 = this.value1[rowId].quantity * this.value1[rowId].transaction_cdr_detail.carbon_intensity_upstream;
+            }
+            return this.carbonUpstream1;
+        },
+        carbonDownstream(rowId) {   //Calculate the carbon downstream value for the first bar chart
+            if(this.value1[rowId].quantity!=null){
+                this.carbonDownstream1 = this.value1[rowId].quantity * 3.1;
+            }
+            return this.carbonDownstream1;
+        },
+        carbonTotal(rowId){   //Calculate the total carbon value for the first bar chart
+            return this.carbonUpstream1 + this.carbonDownstream1;
+        },
+        isButtonDisabled(rowId) {
+            return this.selectedRowId !== null && this.selectedRowId !== rowId; // Disable details button for other rows when one row is clicked
+        },
         adjustPaginationAfterDelete() {
             if (this.currentPage > this.totalPages) {
                 this.currentPage = this.totalPages;
@@ -287,7 +413,12 @@ export default {
             itemsPerPage: 7,
             showingData: [],
             selectedRows: [],
-            deleteArr: []
+            selectedRowId: null, // Track the currently active row where detail button has been clicked
+            deleteArr: [],
+            expandedRows: [],
+            value1: [],
+            carbonDownstream1: 0,
+            carbonUpstream1: 0,
         };
     },
     async created() {
@@ -329,20 +460,106 @@ export default {
 };
 </script>
 
-
-
 <style>
-table{
-    border-collapse: separate;
-    border-spacing: 0 8px;
-}
 
 td:first-child,
 th:first-child {
-    border-radius: 10px 0 0 10px;
+    border-radius: 20px 0 0 20px;
 }
+
 td:last-child,
 th:last-child {
-    border-radius: 0 10px 10px 0;
+    border-radius: 0 20px 20px 0;
+}
+
+tr {
+  border-bottom: 8px solid #F8F9FA;
+}
+
+#hiddentd{
+    border-radius: 0 0 20px 20px;
+}
+
+tr.highlighted td:first-child {
+    border-radius: 20px 0 0 0;
+}
+
+tr.highlighted td:last-child {
+    border-radius: 0 20px 0 0;
+}
+
+tr.highlighted {
+    border-bottom: 0 ;
+}
+
+#box-shadow {
+  box-shadow: 0px 4px 4px 0px #0F0F0F;
+}
+
+.label-container {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 24px;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  margin-right: 32px;
+}
+
+.label-box {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+}
+
+.chart-container {
+  width: 100%;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 24px;
+}
+
+.bar {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.bar-part {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  color: #fff;
+  height: 100%;
+  transition: width 0.3s ease;
+  white-space: nowrap;
+}
+
+.bar-value1 {
+  background-color: #EE506D;
+}
+
+.bar-value2 {
+  background-color: #B5334A;
+}
+
+.bar-value3 {
+  background-color: #12B87C;
+}
+
+.bar-value4 {
+  background-image: url("/public/images/bar_4.svg");
+}
+
+input[type="range"] {
+  width: 100px;
 }
 </style> 
