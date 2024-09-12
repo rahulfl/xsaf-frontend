@@ -171,6 +171,7 @@
                             <input type="text" id="price" ref="price" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 active:bg-white focus:bg-white focus:border-[#DDDDDD] block w-[300px] h-[56px] p-[16px] pr-[90px] hover:bg-white"/>
                         </div>
                     </div>
+                    <p id="error" ref="price_error" class="text-[#EE506D]">{{price_error}}</p>
                 </div>
             </div>
 
@@ -214,7 +215,7 @@
                 <input type="text" id="cdrId" ref="cdrId" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 focus:border-[#DDDDDD] active:bg-white focus:bg-white block w-[300px] h-[56px] p-[16px] hover:bg-white"/>
             </div>
 
-            <div class="h-[87px] w-[350px] flex-col justify-start items-start space-y-[12px] flex">
+            <div class="h-[87px] w-[550px] flex-col justify-start items-start space-y-[12px] flex">
                 <div class="relative">
                     <div class="w-[300px] flex-col justify-start items-start space-y-[12px] inline-flex">
                         <div class="absolute inset-y-0 start-4 pt-[40px] flex items-center justify-right pointer-events-none">
@@ -224,9 +225,10 @@
                         <input type="text" id="carbonIntensityUpstream" ref="carbonIntensityUpstream" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 active:bg-white focus:bg-white focus:border-[#DDDDDD] block w-[300px] h-[56px] p-[16px] pr-[60px] hover:bg-white"/>
                     </div>
                 </div>
+                <p id="error" ref="carbon_intensity_upstream_error" class="text-[#EE506D]">{{carbon_intensity_upstream_error}}</p>
             </div>
 
-            <div class="h-[87px] w-[300px] flex-col justify-start items-start space-y-[12px] flex">
+            <div class="h-[87px] w-[500px] flex-col justify-start items-start space-y-[12px] flex">
                 <div class="relative">
                     <div class="w-[300px] flex-col justify-start items-start space-y-[12px] inline-flex">
                         <div class="absolute inset-y-0 start-4 pt-[40px] flex items-center justify-right pointer-events-none">
@@ -236,6 +238,7 @@
                         <input type="text" id="carbonRemoved" ref="carbonRemoved" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 active:bg-white focus:bg-white focus:border-[#DDDDDD] block w-[300px] h-[56px] p-[16px] pr-[60px] hover:bg-white"/>
                     </div>
                 </div>
+                <p id="error" ref="carbon_removed_error" class="text-[#EE506D]">{{carbon_removed_error}}</p>
             </div>
         </div>
         <div class="w-full h-[44px] justify-end items-center flex pt-[180px]">
@@ -311,6 +314,10 @@ export default {
                     if(this.errors.fuel){this.fuel_error = this.errors.fuel[0];} else if(this.errors.fuel==undefined){this.fuel_error = "";}
                     if(this.errors.quantity){this.quantity_error = this.errors.quantity[0];} else if(this.errors.quantity==undefined){this.quantity_error = "";}
                     if(this.errors.cdr_provider_id){this.cdr_provider_id_error = this.errors.cdr_provider_id[0];} else if(this.errors.cdr_provider_id==undefined){this.cdr_provider_id_error = "";}
+                    if(this.errors.carbon_removed){this.carbon_removed_error = this.errors.carbon_removed[0];} else if(this.errors.carbon_removed==undefined){this.carbon_removed_error = "";}
+                    if(this.errors.price){this.price_error = this.errors.price[0];} else if(this.errors.price==undefined){this.price_error = "";}
+                    if(this.errors.carbon_intensity_upstream){this.carbon_intensity_upstream_error = this.errors.carbon_intensity_upstream[0];} else if(this.errors.carbon_intensity_upstream==undefined){this.carbon_intensity_upstream_error = "";}
+
                 }
             });
         },
@@ -367,6 +374,9 @@ export default {
             fuel_error: null,
             quantity_error: null,
             cdr_provider_id_error: null,
+            carbon_removed_error: null,
+            carbon_intensity_upstream_error: null,
+            price: null,
         };
     },
     async created() {

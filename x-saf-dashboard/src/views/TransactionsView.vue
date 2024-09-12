@@ -139,9 +139,11 @@
                 <td class="pr-[16px] py-[16px] pl-[24px]">
                     {{row.trader}}
                 </td>
-                <td class="pr-[16px] py-[16px] pl-[24px] text-end">
-                    <button type="button" @click="toggleDetails(row.id)" :disabled="isButtonDisabled(row.id)" class="w-[78px] h-[37px] text-[#74797C] bg-white border border-[#74797C] focus:outline-none hover:bg-[#F8F9FA] focus:ring-0 focus:ring-[#74797C] font-medium rounded-[4px] text-[14px] px-[16px] py-[8px] me-[8px]">{{ getButtonName(row.id)}}</button>
-                    <button type="button" @click="EditTransactions(row.id)" class="w-[58px] h-[37px] text-[#12B87C] bg-white border border-[#12B87C] focus:outline-none hover:bg-green-50 focus:ring-0 focus:ring-[#74797C] font-medium rounded-[4px] text-[14px] px-[16px] py-[8px]">Edit</button>
+                <td class="pr-[16px] py-[16px] pl-[24px] text-right">
+                    <div class="inline-flex">
+                        <button type="button" @click="toggleDetails(row.id)" :disabled="isButtonDisabled(row.id)" class="w-[78px] h-[37px] text-[#74797C] bg-white border border-[#74797C] focus:outline-none hover:bg-[#F8F9FA] focus:ring-0 focus:ring-[#74797C] font-medium rounded-[4px] text-[14px] px-[16px] py-[8px] me-[8px]">{{ getButtonName(row.id)}}</button>
+                        <button type="button" @click="EditTransactions(row.id)" class="w-[58px] h-[37px] text-[#12B87C] bg-white border border-[#12B87C] focus:outline-none hover:bg-green-50 focus:ring-0 focus:ring-[#74797C] font-medium rounded-[4px] text-[14px] px-[16px] py-[8px]">Edit</button>
+                    </div>
                 </td>
             </tr>
 
@@ -152,7 +154,7 @@
                 <td colspan="8" id="hiddentd">
                  <div class="w-full h-[418px] rounded flex-col justify-start items-start gap-y-[16px] inline-flex pt-[12px] pl-[24px] pb-[24px] pr-[24px] font-Manrope">
                     <div class="w-full h-[182px] space-x-[16px]">
-                        <div class="h-[182px] w-[calc(49.4%)] px-[24px] pt-[24px] pb-[32px] bg-[#F8F9FA] rounded-[4px] flex-col justify-start items-start gap-y-[24px] inline-flex" id="box-shadow">
+                        <div class="h-[182px] w-[calc(49.2%)] px-[24px] pt-[24px] pb-[32px] bg-[#F8F9FA] rounded-[4px] flex-col justify-start items-start gap-y-[24px] inline-flex" id="box-shadow">
                             <div class="h-[19px] w-[560px] text-[#0F0F0F] text-[16px] font-medium font-Manrope leading-tight">{{ row.quantity }}t {{ row.fuel }}</div>
                             <div class="w-[560px] h-[83px] flex-col justify-start items-start gap-y-[16px] flex font-Manrope">
                                 <div class="h-[17px] w-[560px] self-stretch"><span class="text-[#74797C] text-[14px] font-medium">Carbon intensity upstream: </span><span class="text-[#0F0F0F] text-[14px] font-medium"> {{ row.transaction_cdr_detail.carbon_intensity_upstream }}t co2 ({{row.transaction_cdr_detail.carbon_intensity_upstream/100}} co2/t)</span></div>
@@ -188,11 +190,11 @@
                             <div class="label-container">
                                 <div class="label">
                                     <div class="label-box" style="background-color: #EE506D;"></div>
-                                    <span class="text-[12px] w-[80px]">{{ carbonUpstream(row.id) }}t Upstream</span>
+                                    <span class="text-[12px] w-[90px]">{{ carbonUpstream(row.id) }}t Upstream</span>
                                 </div>
                                 <div class="label">
                                     <div class="label-box" style="background-color: #B5334A;"></div>
-                                    <span class="text-[12px] w-[100px]">{{ carbonDownstream(row.id) }}t Downstream</span>
+                                    <span class="text-[12px] w-[110px]">{{ carbonDownstream(row.id) }}t Downstream</span>
                                 </div>
                             </div>
                         </div>
@@ -215,7 +217,7 @@
                         </div>
 
                         <div class="h-[184px] w-[calc(33%)] px-[24px] pt-[24px] pb-[32px] bg-[#F8F9FA] rounded-[4px] gap-y-[32px] ">
-                            <div class="text-[16px] text-[#0F0F0F]">{{ carbonTotal(rowId) - row.transaction_cdr_detail.carbon_removed }}t of Net Emissions</div>
+                            <div class="text-[16px] text-[#0F0F0F]">{{ (carbonTotal(rowId) - row.transaction_cdr_detail.carbon_removed).toFixed(3) }}t of Net Emissions</div>
                             <div class="chart-container">
                                 <div class="bar">
                                     <div class="bar-part bar-value4" :style="{ width: 100 + '%' }">
@@ -296,16 +298,16 @@ export default {
             if(this.value1[rowId].quantity!=null && this.value1[rowId].transaction_cdr_detail.carbon_intensity_upstream!=null){
                 this.carbonUpstream1 = this.value1[rowId].quantity * this.value1[rowId].transaction_cdr_detail.carbon_intensity_upstream;
             }
-            return this.carbonUpstream1;
+            return (this.carbonUpstream1).toFixed(2);
         },
         carbonDownstream(rowId) {   //Calculate the carbon downstream value for the first bar chart
             if(this.value1[rowId].quantity!=null){
                 this.carbonDownstream1 = this.value1[rowId].quantity * 3.1;
             }
-            return this.carbonDownstream1;
+            return (this.carbonDownstream1).toFixed(2);
         },
         carbonTotal(rowId){   //Calculate the total carbon value for the first bar chart
-            return this.carbonUpstream1 + this.carbonDownstream1;
+            return (this.carbonUpstream1 + this.carbonDownstream1).toFixed(3);
         },
         isButtonDisabled(rowId) {
             return this.selectedRowId !== null && this.selectedRowId !== rowId; // Disable details button for other rows when one row is clicked
