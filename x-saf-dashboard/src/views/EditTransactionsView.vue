@@ -380,10 +380,10 @@ export default {
         };
     },
     async created() {
+        const route = useRoute();
+        localStorage.setItem('redirect','edit-transaction?id='+route.query.id);
         let token = localStorage.getItem('token');
         if(token){
-            const route = useRoute();
-            localStorage.setItem('redirect','edit-transaction?id='+route.query.id);
             try {
                 // Getting the URL parameters and splitting the key and value 
                 let queryString = window.location.search;
@@ -395,7 +395,11 @@ export default {
                     this.t_id = pair[1];
                     
                     // GET request for retrieving transaction details (id as parameter) 
-                    const transaction_edit = await axios.get('transaction/'+pair[1]);
+                    const transaction_edit = await axios.get('transaction/'+pair[1],{
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
                     const transaction = transaction_edit.data.data[0];
 
                     // Setting all input values to the stored values 
@@ -419,15 +423,31 @@ export default {
                 }
 
                 // Dropdowns 
-                const response_customer = await axios.get('customer');
+                const response_customer = await axios.get('customer',{
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
                 this.customer = response_customer.data;
-                const response_trader = await axios.get('trader');
+                const response_trader = await axios.get('trader',{
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
                 this.trader = response_trader.data;
-                const response_cdrProvider = await axios.get('supplier');
+                const response_cdrProvider = await axios.get('supplier',{
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
                 this.cdrProvider = response_cdrProvider.data;
             } 
             catch (error) {
                 console.error(error);
+                if(error.response.data.message =="Unauthenticated."){
+                    localStorage.removeItem('token');
+                    this.$router.push('/');
+                }
             }
         }
         else{

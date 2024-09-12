@@ -148,6 +148,7 @@ export default {
         },
         handleSignout() {
             localStorage.removeItem('token');
+            localStorage.removeItem('redirect');
             this.$router.push('/');
         }
     },
@@ -155,7 +156,11 @@ export default {
         let token = localStorage.getItem('token');
         if(token){
             try{
-                const response = await axios.get('user');
+                const response = await axios.get('user',{
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
                 this.user = response.data.data.user;
             }
             catch(error){

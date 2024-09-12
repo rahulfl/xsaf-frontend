@@ -140,11 +140,15 @@ export default {
         };
     },
     async created() {
+        localStorage.setItem('redirect','traders');
         let token = localStorage.getItem('token');
         if(token){
-            localStorage.setItem('redirect','traders');
             try {
-                const response = await axios.get('trader');
+                const response = await axios.get('trader',{
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
                 this.customers = response.data;
                 response.data.data.forEach((value, index) => {
                     this.items.push(value);
@@ -161,6 +165,10 @@ export default {
             } 
             catch (error) {
                 console.error(error);
+                if(error.response.data.message =="Unauthenticated."){
+                    localStorage.removeItem('token');
+                    this.$router.push('/');
+                }
             }
         }
         else{

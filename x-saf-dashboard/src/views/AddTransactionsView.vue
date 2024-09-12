@@ -362,20 +362,36 @@ export default {
         };
     },
     async created() {
+        localStorage.setItem('redirect','add-transaction');
         let token = localStorage.getItem('token');
         if(token){
-            localStorage.setItem('redirect','add-transaction');
             try {
                 // Dropdowns
-                const response_customer = await axios.get('customer');
+                const response_customer = await axios.get('customer',{
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
                 this.customer = response_customer.data;
-                const response_trader = await axios.get('trader');
+                const response_trader = await axios.get('trader',{
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
                 this.trader = response_trader.data;
-                const response_cdrProvider = await axios.get('supplier');
+                const response_cdrProvider = await axios.get('supplier',{
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
                 this.cdrProvider = response_cdrProvider.data;
             } 
             catch (error) {
                 console.error(error);
+                if(error.response.data.message =="Unauthenticated."){
+                    localStorage.removeItem('token');
+                    this.$router.push('/');
+                }
             }
         }
         else{

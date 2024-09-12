@@ -173,11 +173,15 @@ export default {
         };
     },
     async created() {
+        localStorage.setItem('redirect','customers');
         let token = localStorage.getItem('token');
         if(token){
-            localStorage.setItem('redirect','customers');
             try {
-                const response = await axios.get('customer');
+                const response = await axios.get('customer',{
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
                 this.customers = response.data;
                 response.data.data.forEach((value, index) => {
                     this.items.push(value);
@@ -188,6 +192,10 @@ export default {
             } 
             catch (error) {
                 console.error(error);
+                if(error.response.data.message =="Unauthenticated."){
+                    localStorage.removeItem('token');
+                    this.$router.push('/');
+                }
             }
         }
         else{

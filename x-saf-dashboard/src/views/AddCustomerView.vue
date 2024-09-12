@@ -150,14 +150,18 @@ export default {
         };
     },
     async created() {
+        localStorage.setItem('redirect','add-customer');
         let token = localStorage.getItem('token');
         if(token){
-            localStorage.setItem('redirect','add-customer');
             try {
 
             } 
             catch (error) {
                 console.error(error);
+                if(error.response.data.message =="Unauthenticated."){
+                    localStorage.removeItem('token');
+                    this.$router.push('/');
+                }
             }
         }
         else{

@@ -279,7 +279,11 @@ export default {
     methods: {
         async toggleDetails(rowId) {
             this.selectedRowId = (this.selectedRowId === rowId) ? null : rowId; // Toggle the selectedRowId to disable other detail buttons
-            const response = await axios.get('transaction/' + rowId);  //Get the transaction for the specific rowID
+            const response = await axios.get('transaction/' + rowId,{
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });  //Get the transaction for the specific rowID
             this.value1[rowId] = response.data.data[0];  //Send this value for carbon emission calculations
             const index = this.expandedRows.indexOf(rowId);
             if (index === -1) {
@@ -424,11 +428,15 @@ export default {
         };
     },
     async created() {
+        localStorage.setItem('redirect','transactions');
         let token = localStorage.getItem('token');
         if(token){
-            localStorage.setItem('redirect','transactions');
             try {
-                const response = await axios.get('transaction');
+                const response = await axios.get('transaction', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
                 this.transactions = response.data; 
                 response.data.data.forEach((value, index) => {
                     if(value.trader != null){value.trader = value.trader.name;}
@@ -441,6 +449,10 @@ export default {
             } 
             catch (error) {
                 console.error(error);
+                if(error.response.data.message =="Unauthenticated."){
+                    localStorage.removeItem('token');
+                    this.$router.push('/');
+                }
             }
         }
         else{

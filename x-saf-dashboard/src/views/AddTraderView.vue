@@ -94,14 +94,18 @@ export default {
         };
     },
     async created() {
+        localStorage.setItem('redirect','add-trader');
         let token = localStorage.getItem('token');
         if(token){
-            localStorage.setItem('redirect','add-trader');
             try {
 
             } 
             catch (error) {
                 console.error(error);
+                if(error.response.data.message =="Unauthenticated."){
+                    localStorage.removeItem('token');
+                    this.$router.push('/');
+                }
             }
         }
         else{

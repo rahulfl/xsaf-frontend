@@ -77,7 +77,13 @@ export default{
                     }
                 );
                 localStorage.setItem('token',response.data.data.authorisation.access_token);
-                this.$router.push('/transactions');
+                let redirect = localStorage.getItem('redirect');
+                if(redirect!= null){
+                    this.$router.push('/'+ redirect);
+                }
+                else{
+                    this.$router.push('/transactions');
+                }
             }
             catch (error) {
                 if(error.response.data.errors.email){
