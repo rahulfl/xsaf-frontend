@@ -261,18 +261,16 @@ onMounted(() => {
 import axios from 'axios';
 
 export default {
-    name: "AddTransactionsView",
+    name: "AddTransactionView",
     methods: {
         goToTransactionsPage() {
             this.$router.push("/transactions");
-        },
-        goToAddCustomerPage() {
-           
         },
         submitForm(){
             if(this.$refs.trader.value == "Select"){
                 this.$refs.trader.value = null;
             }
+            let token = localStorage.getItem('token');
             axios.post('transaction', 
                {
                     "customer_id": this.$refs.customer.value,
@@ -289,8 +287,12 @@ export default {
                     "cdr_id": this.$refs.cdrId.value,
                     "carbon_intensity_upstream": this.$refs.carbonIntensityUpstream.value,
                     "carbon_removed": this.$refs.carbonRemoved.value
+                },
+                {
+                headers: {
+                    'Authorization': `Bearer ${token}`
                 }
-            )
+            })
             .then(response => {
                 this.$router.push("/transactions");
             })
@@ -319,6 +321,7 @@ export default {
             this.$refs.customer_country_id.value = "";
         },
         submitCustomerForm(){
+            let token = localStorage.getItem('token');
             axios.post('customer', 
                {
                     "name": this.$refs.customer_name.value,
@@ -327,8 +330,12 @@ export default {
                     "contact_person_name": this.$refs.customer_contact_person.value,
                     "address": this.$refs.customer_address.value,
                     "country_id": this.$refs.customer_country_id.value,
+                },
+                {
+                headers: {
+                    'Authorization': `Bearer ${token}`
                 }
-            )
+            })
             .then(response => {
                 const modal = new window.Modal(document.getElementById('default-modal'));
                 modal.hide();

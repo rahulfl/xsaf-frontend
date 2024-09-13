@@ -4,9 +4,9 @@
 <div class="justify-between gap-1 flex font-Manrope h-[70px]">
         <div class="h-[38px] justify-start items-center gap-4 flex text-[#0F0F0F] font-medium font-Manrope">
             <div class="w-[32px] h-[32px] relative">
-                <img class="w-[32px] h-[32px]" src="/public/images/traders.svg" alt="image description">
+                <img class="w-[32px] h-[32px]" src="/public/images/suppliers.svg" alt="image description">
             </div>
-            <div class="text-[32px] leading-[38.40px]">Traders</div>
+            <div class="text-[32px] leading-[38.40px]">Suppliers</div>
         </div>
 </div>
 <!-- heading ends-->
@@ -15,10 +15,10 @@
 <div class="relative overflow-x-auto pt-[48px] font-Manrope">
         <div class="w-full h-[68px] flex-col justify-start items-start gap-[24px] inline-flex">
             <div class="self-stretch justify-between items-end inline-flex">
-                <div class="text-[#0F0F0F] text-[20px] font-medium font-Manrope leading-normal">Add Trader</div>
+                <div class="text-[#0F0F0F] text-[20px] font-medium font-Manrope leading-normal">Add supplier</div>
                 <div class="justify-start items-center gap-[16px] flex">
-                    <button @click="goToTradersPage" type="button" class="w-[78px] h-[44px] text-[#74797C] bg-[#F8F9FA] border border-[#74797C] hover:bg-[#DDDDDD] focus:ring-0 font-medium text-[14px] rounded-[4px] px-[16px] py-[10px]">Cancel</button>
-                    <button @click="submitForm" type="button" class="w-[143px] h-[44px] text-white text-[14px] bg-[#12B87C] hover:bg-emerald-400 focus:ring-0 font-medium rounded-[4px] text-[14px] px-[16px] py-[10px]">Save trader</button>
+                    <button @click="goToSuppliersPage" type="button" class="w-[78px] h-[44px] text-[#74797C] bg-[#F8F9FA] border border-[#74797C] hover:bg-[#DDDDDD] focus:ring-0 font-medium text-[14px] rounded-[4px] px-[16px] py-[10px]">Cancel</button>
+                    <button @click="submitForm" type="button" class="w-[143px] h-[44px] text-white text-[14px] bg-[#12B87C] hover:bg-emerald-400 focus:ring-0 font-medium rounded-[4px] text-[14px] px-[16px] py-[10px]">Save supplier</button>
                 </div>
             </div>
             <div class="self-stretch h-[0px] border border-neutral-200"></div>
@@ -46,13 +46,13 @@
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
         </div>
 
         <div class="w-full h-[44px] justify-end items-center flex pt-[120px]">
                 <div class="justify-end items-center gap-[16px] flex">
-                    <button @click="goToTradersPage" type="button" class="w-[78px] h-[44px] text-[#74797C] bg-[#F8F9FA] border border-[#74797C] hover:bg-[#DDDDDD] focus:ring-0 font-medium text-[14px] rounded-[4px] px-[16px] py-[10px]">Cancel</button>
-                    <button @click="submitForm" type="button" class="w-[143px] h-[44px] text-white text-[14px] bg-[#12B87C] hover:bg-emerald-400 focus:ring-0 font-medium rounded-[4px] text-[14px] px-[16px] py-[10px]">Save trader</button>
+                    <button @click="goToSuppliersPage" type="button" class="w-[78px] h-[44px] text-[#74797C] bg-[#F8F9FA] border border-[#74797C] hover:bg-[#DDDDDD] focus:ring-0 font-medium text-[14px] rounded-[4px] px-[16px] py-[10px]">Cancel</button>
+                    <button @click="submitForm" type="button" class="w-[143px] h-[44px] text-white text-[14px] bg-[#12B87C] hover:bg-emerald-400 focus:ring-0 font-medium rounded-[4px] text-[14px] px-[16px] py-[10px]">Save supplier</button>
                 </div>
         </div>
         <div class="pt-[64px]"></div>
@@ -66,6 +66,7 @@
 <script setup>
 import { onMounted } from 'vue'
 import { initFlowbite } from 'flowbite'
+import { useRoute } from 'vue-router'
 
 // initialize components based on data attribute selectors
 onMounted(() => {
@@ -77,14 +78,14 @@ onMounted(() => {
 import axios from 'axios';
 
 export default {
-    name: "AddTraderView",
+    name: "EditSupplierView",
     methods: {
-        goToTradersPage() {
-            this.$router.push("/traders");
+        goToSuppliersPage() {
+            this.$router.push("/suppliers");
         },
         submitForm(){
             let token = localStorage.getItem('token');
-            axios.post('trader', 
+            axios.put('supplier/'+this.t_id,  
                 {
                     "name": this.$refs.name.value,
                     "email": this.$refs.email.value,
@@ -95,7 +96,7 @@ export default {
                 }
             })
             .then(response => {
-                this.$router.push("/traders");
+                this.$router.push("/suppliers");
             })
             .catch(error => {
                 // Handle errors
@@ -111,18 +112,40 @@ export default {
         return {
             errors: [],
             name_error: null,
-            email_error: null
+            email_error: null,
+            t_id: null,
         };
     },
     async created() {
-        localStorage.setItem('redirect','add-trader');
+        const route = useRoute();
+        localStorage.setItem('redirect','edit-supplier?id='+route.query.id);
         let token = localStorage.getItem('token');
         if(token){
             try {
+                // Getting the URL parameters and splitting the key and value 
+                let queryString = window.location.search;
+                let paramString = queryString.split('?')[1];
+                let params_arr = paramString.split('&');
+                for (let i = 0; i < params_arr.length; i++) {
 
+                    let pair = params_arr[i].split('=');
+                    this.t_id = pair[1];
+                    
+                    // GET request for retrieving supplier details (id as parameter) 
+                    const supplier_edit = await axios.get('supplier/'+pair[1],{
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    const supplier = supplier_edit.data.data[0];
+
+                    // Setting all input values to the stored values 
+                    this.$refs.name.value = supplier.name;
+                    this.$refs.email.value = supplier.email;
+                }
             } 
             catch (error) {
-                console.error(error);console.log(error.response.data);
+                console.error(error);
                 if(error.response.data.message =="Unauthenticated."){
                     localStorage.removeItem('token');
                     this.$router.push('/');

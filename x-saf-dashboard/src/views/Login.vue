@@ -70,12 +70,17 @@ export default{
     methods: {
         async handleSubmit() {
             try{
+                let token = localStorage.getItem('token');
                 const response = await axios.post('login', 
                     {
                         email:this.email,
                         password: this.password
+                    },
+                    {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
                     }
-                );
+                });
                 localStorage.setItem('token',response.data.data.authorisation.access_token);
                 let redirect = localStorage.getItem('redirect');
                 if(redirect!= null){

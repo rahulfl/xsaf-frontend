@@ -42,6 +42,11 @@ const router = createRouter({
                 component: () => import("../views/AddCustomerView.vue"),
             },
             {
+                name: 'Edit Customer',
+                path: '/edit-customer',
+                component: () => import("../views/EditCustomerView.vue"),
+            },
+            {
                 name: 'Traders',
                 path: '/traders',
                 component: () => import("../views/TradersView.vue"),
@@ -52,6 +57,11 @@ const router = createRouter({
                 component: () => import("../views/AddTraderView.vue"),
             },
             {
+                name: 'Edit Trader',
+                path: '/edit-trader',
+                component: () => import("../views/EditTraderView.vue"),
+            },
+            {
                 name: 'Suppliers',
                 path: '/suppliers',
                 component: () => import("../views/SuppliersView.vue"),
@@ -60,6 +70,11 @@ const router = createRouter({
                 name: 'Add Supplier',
                 path: '/add-supplier',
                 component: () => import("../views/AddSupplierView.vue"),
+            },
+            {
+                name: 'Edit Supplier',
+                path: '/edit-supplier',
+                component: () => import("../views/EditSupplierView.vue"),
             },
             {
                 name: 'Xsaf Protocol',

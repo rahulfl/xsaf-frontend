@@ -99,6 +99,7 @@
 <script setup>
 import { onMounted } from 'vue'
 import { initFlowbite } from 'flowbite'
+import { useRoute } from 'vue-router'
 
 // initialize components based on data attribute selectors
 onMounted(() => {
@@ -110,14 +111,14 @@ onMounted(() => {
 import axios from 'axios';
 
 export default {
-    name: "AddCustomerView",
+    name: "EditCustomerView",
     methods: {
         goToCustomerPage() {
             this.$router.push("/customers");
         },
         submitForm(){
             let token = localStorage.getItem('token');
-            axios.post('customer', 
+            axios.put('customer/'+this.t_id, 
                {
                     "name": this.$refs.name.value,
                     "email": this.$refs.email.value,
@@ -151,15 +152,44 @@ export default {
         return {
             errors: [],
             name_error: null,
-            email_error: null
+            email_error: null,
+            t_id: null,
         };
     },
     async created() {
-        localStorage.setItem('redirect','add-customer');
+        const route = useRoute();
+        localStorage.setItem('redirect','edit-customer?id='+route.query.id);
         let token = localStorage.getItem('token');
         if(token){
             try {
+                // Getting the URL parameters and splitting the key and value 
+                let queryString = window.location.search;
+                let paramString = queryString.split('?')[1];
+                let params_arr = paramString.split('&');
+                for (let i = 0; i < params_arr.length; i++) {
 
+                    let pair = params_arr[i].split('=');
+                    this.t_id = pair[1];
+                    
+                    // GET request for retrieving customer details (id as parameter) 
+                    const customer_edit = await axios.get('customer/'+pair[1],{
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    const customer = customer_edit.data.data[0];
+
+                    // Setting all input values to the stored values 
+                    this.$refs.name.value = customer.name;
+                    this.$refs.email.value = customer.email;
+                    this.$refs.phone_no.value = customer.phone_no;
+                    this.$refs.contact_person.value = customer.contact_person_name;
+                    this.$refs.address.value = customer.address;
+                    this.$refs.city.value = customer.city;
+                    this.$refs.state.value = customer.state;
+                    //this.$refs.country_code.value = customer.country_id;
+                    this.$refs.postal_code.value = customer.postal_code;
+                }
             } 
             catch (error) {
                 console.error(error);

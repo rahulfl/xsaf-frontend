@@ -87,15 +87,20 @@ export default{
                 else{
                     this.user_type_id_error ="";
                 }
+                let token = localStorage.getItem('token');
                 const response = await axios.post('register', 
-                {
+                    {
                         "name": this.name,
                         "email": this.email,
                         "password": this.password,
                         "password_confirmation": this.confirmPassword,
                         "user_type_id" : this.user_type_id
+                    },
+                    {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
                     }
-                );
+                });
                 this.$router.push('/');
             }
             catch (error) {

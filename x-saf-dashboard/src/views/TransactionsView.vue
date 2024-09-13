@@ -358,9 +358,15 @@ export default {
                 this.selectedRows.forEach((item, index) => {
                     this.deleteArr.push(item);
                 }); 
-
-                const response = await axios.post('transaction/deleteSelected', {
-                    "ids": this.deleteArr
+                let token = localStorage.getItem('token');
+                const response = await axios.post('transaction/deleteSelected', 
+                    {
+                        "ids": this.deleteArr
+                    },
+                    {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
                 });
 
                 if (response.status === 200) {

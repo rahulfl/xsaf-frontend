@@ -130,14 +130,14 @@ export default {
         goToAddCustomerPage() {
             this.$router.push("/add-customer");
         },
-        //EditCustomer(c_id) {
-            //this.$router.push(
-            //        { 
-             //           path: '/edit-customer', 
-            //            query: { id: c_id,}
-            //        } 
-            //    );
-        //},
+        EditCustomer(c_id) {
+            this.$router.push(
+                    { 
+                        path: '/edit-customer', 
+                        query: { id: c_id,}
+                    } 
+                );
+        },
         changePage(page) {
             if (page >= 1 && page <= this.totalPages) {
                 this.currentPage = page;

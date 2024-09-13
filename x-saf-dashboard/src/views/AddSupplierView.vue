@@ -24,17 +24,30 @@
             <div class="self-stretch h-[0px] border border-neutral-200"></div>
         </div>  
 
-        <div class="w-[632px] h-[100px] flex-col justify-start items-start pt-[48px] space-y-[48px]">
-            <div class="h-[87px] w-[350px] flex-col justify-start items-start space-y-[12px] flex">
-                <div class="relative">
-                    <div class="w-[300px] flex-col justify-start items-start space-y-[12px] inline-flex">
-                        <label for="name" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Name</label>
-                        <input type="text" id="name" ref="name" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 active:bg-white focus:bg-white focus:border-[#DDDDDD] block w-[300px] h-[56px] p-[16px] pr-[60px] hover:bg-white"/>
-                        <p id="error" ref="name_error" class="text-[#EE506D]">{{name_error}}</p>
+        <div class="space-y-[48px]">
+            <div class="w-[632px] h-[100px] flex-col justify-start items-start pt-[48px] space-y-[48px]">
+                <div class="h-[87px] w-[350px] flex-col justify-start items-start space-y-[12px] flex">
+                    <div class="relative">
+                        <div class="w-[300px] flex-col justify-start items-start space-y-[12px] inline-flex">
+                            <label for="name" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Name</label>
+                            <input type="text" id="name" ref="name" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 active:bg-white focus:bg-white focus:border-[#DDDDDD] block w-[300px] h-[56px] p-[16px] pr-[60px] hover:bg-white"/>
+                            <p id="error" ref="name_error" class="text-[#EE506D]">{{name_error}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+            <div class="w-[632px] h-[100px] flex-col justify-start items-start pt-[48px] space-y-[48px]">
+                <div class="h-[87px] w-[350px] flex-col justify-start items-start space-y-[12px] flex">
+                    <div class="relative">
+                        <div class="w-[300px] flex-col justify-start items-start space-y-[12px] inline-flex">
+                            <label for="email" class="block text-[16px] font-Manrope font-medium text-[#0F0F0F] bg-[#F8F9FA]">Email</label>
+                            <input type="text" id="email" ref="email" class="bg-[#F8F9FA] border border-[#DDDDDD] text-[#74797C] text-[16px] rounded-[4px] focus:ring-[#DDDDDD] focus:ring-0 active:bg-white focus:bg-white focus:border-[#DDDDDD] block w-[300px] h-[56px] p-[16px] pr-[60px] hover:bg-white"/>
+                            <p id="error" ref="email_error" class="text-[#EE506D]">{{email_error}}</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>  
+        </div>
 
         <div class="w-full h-[44px] justify-end items-center flex pt-[120px]">
                 <div class="justify-end items-center gap-[16px] flex">
@@ -70,11 +83,17 @@ export default {
             this.$router.push("/suppliers");
         },
         submitForm(){
+            let token = localStorage.getItem('token');
             axios.post('supplier', 
                 {
                     "name": this.$refs.name.value,
+                    "email": this.$refs.email.value,
+                },
+                {
+                headers: {
+                    'Authorization': `Bearer ${token}`
                 }
-            )
+            })
             .then(response => {
                 this.$router.push("/suppliers");
             })
@@ -83,6 +102,7 @@ export default {
                 this.errors = error.response.data.data;
                 if(this.errors){
                     if(this.errors.name){this.name_error = this.errors.name[0];} else if(this.errors.name==undefined){this.name_error = "";}
+                    if(this.errors.email){this.email_error = this.errors.email[0];} else if(this.errors.email==undefined){this.email_error = "";}
                 }
             });
         },
@@ -90,7 +110,8 @@ export default {
     data() {
         return {
             errors: [],
-            name_error: null
+            name_error: null,
+            email_error: null
         };
     },
     async created() {

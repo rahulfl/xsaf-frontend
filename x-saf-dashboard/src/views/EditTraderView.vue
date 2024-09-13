@@ -66,6 +66,7 @@
 <script setup>
 import { onMounted } from 'vue'
 import { initFlowbite } from 'flowbite'
+import { useRoute } from 'vue-router'
 
 // initialize components based on data attribute selectors
 onMounted(() => {
@@ -77,14 +78,14 @@ onMounted(() => {
 import axios from 'axios';
 
 export default {
-    name: "AddTraderView",
+    name: "EditTraderView",
     methods: {
         goToTradersPage() {
             this.$router.push("/traders");
         },
         submitForm(){
             let token = localStorage.getItem('token');
-            axios.post('trader', 
+            axios.put('trader/'+this.t_id,
                 {
                     "name": this.$refs.name.value,
                     "email": this.$refs.email.value,
@@ -111,15 +112,37 @@ export default {
         return {
             errors: [],
             name_error: null,
-            email_error: null
+            email_error: null,
+            t_id: null,
         };
     },
     async created() {
-        localStorage.setItem('redirect','add-trader');
+        const route = useRoute();
+        localStorage.setItem('redirect','edit-trader?id='+route.query.id);
         let token = localStorage.getItem('token');
         if(token){
             try {
+                // Getting the URL parameters and splitting the key and value 
+                let queryString = window.location.search;
+                let paramString = queryString.split('?')[1];
+                let params_arr = paramString.split('&');
+                for (let i = 0; i < params_arr.length; i++) {
 
+                    let pair = params_arr[i].split('=');
+                    this.t_id = pair[1];
+                    
+                    // GET request for retrieving trader details (id as parameter) 
+                    const trader_edit = await axios.get('trader/'+pair[1],{
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    const trader = trader_edit.data.data[0];
+
+                    // Setting all input values to the stored values 
+                    this.$refs.name.value = trader.name;
+                    this.$refs.email.value = trader.email;
+                }
             } 
             catch (error) {
                 console.error(error);console.log(error.response.data);

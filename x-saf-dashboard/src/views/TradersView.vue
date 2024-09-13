@@ -46,6 +46,12 @@
                         </div> Name            
                     </div>
                 </th>
+                <th scope="col" class="font-medium px-6 py-3">
+                    <div class="relative">
+                        <div class="absolute inset-y-0 start-12 flex-inline items-center ps-5 pt-1">
+                        </div> Email            
+                    </div>
+                </th>
                 <th scope="col" class="font-medium py-3">
                     <div class="text-[#EE506D] text-[14px] text-end font-medium font-Manrope">Delete selected (4)</div>
                 </th>
@@ -60,6 +66,9 @@
                 </td>
                 <td class="pr-[16px] py-[16px] pl-[24px]">
                     {{trader.name}}
+                </td>
+                <td class="pr-[16px] py-[16px] pl-[24px]">
+                    {{trader.email}}
                 </td>
                 <td class="pr-[16px] py-[16px] pl-[24px] text-end">
                     <button type="button" class="w-[78px] h-[37px] text-[#74797C] bg-white border border-[#74797C] focus:outline-none hover:bg-[#F8F9FA] focus:ring-0 focus:ring-[#74797C] font-medium rounded-[4px] text-[14px] px-[16px] py-[8px] me-[8px]">Details</button>
@@ -100,14 +109,14 @@ export default {
         goToAddTraderPage() {
             this.$router.push("/add-trader");
         },
-        //EditTrader(t_id) {
-            //this.$router.push(
-            //        { 
-             //           path: '/edit-trader', 
-            //            query: { id: t_id,}
-            //        } 
-            //    );
-        //},
+        EditTrader(t_id) {
+            this.$router.push(
+                    { 
+                        path: '/edit-trader', 
+                        query: { id: t_id,}
+                    } 
+                );
+        },
         changePage(page) {
         if (page >= 1 && page <= this.totalPages) {
             this.currentPage = page;
