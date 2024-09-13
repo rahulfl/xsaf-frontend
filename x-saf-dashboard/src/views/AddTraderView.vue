@@ -122,7 +122,7 @@ export default {
 
             } 
             catch (error) {
-                console.error(error);console.log(error.response.data);
+                console.error(error);
                 if(error.response.data.message =="Unauthenticated."){
                     localStorage.removeItem('token');
                     this.$router.push('/');
