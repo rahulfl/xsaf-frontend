@@ -278,6 +278,7 @@ export default {
     },
     methods: {
         async toggleDetails(rowId) {
+            let token = localStorage.getItem('token');
             this.selectedRowId = (this.selectedRowId === rowId) ? null : rowId; // Toggle the selectedRowId to disable other detail buttons
             const response = await axios.get('transaction/' + rowId,{
                 headers: {
