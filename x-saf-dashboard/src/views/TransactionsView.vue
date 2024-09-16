@@ -61,50 +61,32 @@
                 </th>
                 <th scope="col" class="font-medium px-6 py-3">
                     <div class="relative">
-                        <div class="absolute inset-y-0 start-12 flex-inline items-center ps-5 pt-1">
-                            <img class="w-[8px] h-[6px]" src="/public/images/sort_up.svg" alt="image description">
-                            <img class="w-[8px] h-[6px]" src="/public/images/sort_down.svg" alt="image description">
-                        </div> Customer            
+                        Customer            
                     </div>
                 </th>
                 <th scope="col" class="font-medium px-6 py-3">
                     <div class="relative">
-                         <div class="absolute inset-y-0 start-12 flex-inline items-center ps-12 pt-1">
-                            <img class="w-[8px] h-[6px]" src="/public/images/sort_up.svg" alt="image description">
-                            <img class="w-[8px] h-[6px]" src="/public/images/sort_down.svg" alt="image description">
-                        </div>Purchase date 
+                        Purchase date 
                     </div>
                 </th>
                 <th scope="col" class="font-medium px-6 py-3">
                     <div class="relative">
-                         <div class="absolute inset-y-0 start-12 flex-inline items-center ps-10 pt-1">
-                            <img class="w-[8px] h-[6px]" src="/public/images/sort_up.svg" alt="image description">
-                            <img class="w-[8px] h-[6px]" src="/public/images/sort_down.svg" alt="image description">
-                        </div> Delivery date          
+                        Delivery date          
                     </div>
                 </th>
                 <th scope="col" class="font-medium px-6 py-3">
                     <div class="relative">
-                        <div class="absolute inset-y-0 start-12 flex-inline items-center ps-3 pt-1">
-                            <img class="w-[8px] h-[6px]" src="/public/images/sort_up.svg" alt="image description">
-                            <img class="w-[8px] h-[6px]" src="/public/images/sort_down.svg" alt="image description">
-                        </div> Quantity         
+                        Quantity         
                     </div>
                 </th>
                 <th scope="col" class="font-medium px-6 py-3">
                     <div class="relative">
-                        <div class="absolute inset-y-0 start-12 flex-inline items-center ps-3 pt-1">
-                            <img class="w-[8px] h-[6px]" src="/public/images/sort_up.svg" alt="image description">
-                            <img class="w-[8px] h-[6px]" src="/public/images/sort_down.svg" alt="image description">
-                        </div> Supplier          
+                        Supplier          
                     </div>
                 </th>
                 <th scope="col" class="font-medium px-6 py-3">
                     <div class="relative">
-                        <div class="absolute inset-y-0 start-12 flex-inline items-center ps-0 pt-1">
-                            <img class="w-[8px] h-[6px]" src="/public/images/sort_up.svg" alt="image description">
-                            <img class="w-[8px] h-[6px]" src="/public/images/sort_down.svg" alt="image description">
-                        </div> Trader     
+                        Trader     
                     </div>
                 </th>
                 <th scope="col" class="font-medium py-3">
@@ -121,7 +103,7 @@
                         <input id="checkbox-delete" type="checkbox" v-model="selectedRows" :value="row.id"  class="w-[15px] h-[15px] bg-[#F3F3F4] border-[#74797C] focus:[#1983FF] focus:ring-0 hover:ring-1 hover:border-[#1983FF]">
                     </div>
                 </td>
-                <td class="pr-[16px] py-[16px] pl-[24px]">
+                <td class="pr-[16px] py-[16px] pl-[24px]" @click="ViewTransactions(row.id)" id="clickable-text">
                     {{row.customer.name}}
                 </td>
                 <td class="pr-[16px] py-[16px] pl-[24px]">
@@ -393,6 +375,14 @@ export default {
                     } 
                 );
         },
+        ViewTransactions(t_id) {
+            this.$router.push(
+                    { 
+                        path: '/view-transaction', 
+                        query: { id: t_id,}
+                    } 
+                );
+        },
         pagination(){
             if(this.items.length == 0){this.showingData[0] = 0;} else {this.showingData[0] = 1;}
             if(this.items.length<this.itemsPerPage){
@@ -582,5 +572,12 @@ tr.highlighted {
 
 input[type="range"] {
   width: 100px;
+}
+
+
+/* Change the cursor to a pointer (finger) on hover */
+#clickable-text:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 </style> 
