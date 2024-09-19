@@ -87,6 +87,9 @@ export default{
     },
     methods: {
         async handleSubmit(){
+            if(this.user_type_id == 'Select' || this.user_type_id== ''){
+                this.user_type_id = null;
+            }
             try{
                 let token = localStorage.getItem('token');
                 const response = await axios.post('register', 
@@ -104,7 +107,7 @@ export default{
                 });
                 this.$router.push('/');
             }
-            catch (error) { console.log(error.response.data.data);
+            catch (error) { 
                 if(error.response.data.data.name){
                     this.name_error = error.response.data.data.name[0];
                 }
@@ -123,7 +126,7 @@ export default{
                 else{
                     this.password_error = "";
                 }
-                if(error.response.data.data.user_type_id || this.user_type_id == 'Select' || this.user_type_id== ''){
+                if(error.response.data.data.user_type_id){
                     this.user_type_id_error = error.response.data.data.user_type_id[0];
                 }
                 else{

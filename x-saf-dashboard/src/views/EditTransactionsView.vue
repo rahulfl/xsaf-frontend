@@ -276,8 +276,14 @@ export default {
             this.$router.push("/transactions");
         },
         submitForm(){
-            if(this.$refs.trader.value == "Select"){
+            if(this.$refs.trader.value == "Select" || this.$refs.trader.value == ""){
                 this.$refs.trader.value = null;
+            }
+            if(this.$refs.customer.value == "Select" || this.$refs.customer.value == ""){
+                this.$refs.customer.value = null;
+            }
+            if(this.$refs.cdrProvider.value == "Select" || this.$refs.cdrProvider.value == ""){
+                this.$refs.cdrProvider.value = null;
             }
             let token = localStorage.getItem('token');
             axios.put('transaction/'+this.t_id, 
@@ -319,7 +325,6 @@ export default {
                     if(this.errors.carbon_removed){this.carbon_removed_error = this.errors.carbon_removed[0];} else if(this.errors.carbon_removed==undefined){this.carbon_removed_error = "";}
                     if(this.errors.price){this.price_error = this.errors.price[0];} else if(this.errors.price==undefined){this.price_error = "";}
                     if(this.errors.carbon_intensity_upstream){this.carbon_intensity_upstream_error = this.errors.carbon_intensity_upstream[0];} else if(this.errors.carbon_intensity_upstream==undefined){this.carbon_intensity_upstream_error = "";}
-
                 }
             });
         },
@@ -383,7 +388,7 @@ export default {
             cdr_provider_id_error: null,
             carbon_removed_error: null,
             carbon_intensity_upstream_error: null,
-            price: null,
+            price_error: null,
         };
     },
     async created() {
