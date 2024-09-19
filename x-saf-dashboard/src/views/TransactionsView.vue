@@ -100,7 +100,7 @@
             <tr class="bg-white text-[#0F0F0F] h-[69px] font-Manrope font-medium" :class="{ 'highlighted': isHighlighted(row.id) }">
                 <td class="pr-[16px] py-[16px] pl-[24px]">
                     <div class="flex items-center">
-                        <input id="checkbox-delete" type="checkbox" v-model="selectedRows" :value="row.id"  class="w-[15px] h-[15px] bg-[#F3F3F4] border-[#74797C] focus:[#1983FF] focus:ring-0 hover:ring-1 hover:border-[#1983FF]">
+                        <input id="checkbox-delete" type="checkbox" v-model="selectedRows" :value="row.id" class="w-[15px] h-[15px] bg-[#F3F3F4] border-[#74797C] focus:[#1983FF] focus:ring-0 hover:ring-1 hover:border-[#1983FF]">
                     </div>
                 </td>
                 <td class="pr-[16px] py-[16px] pl-[24px]" @click="ViewTransactions(row.id)" id="clickable-text">
@@ -123,7 +123,7 @@
                 </td>
                 <td class="pr-[16px] py-[16px] pl-[24px] text-right">
                     <div class="inline-flex">
-                        <button type="button" @click="toggleDetails(row.id)" :disabled="isButtonDisabled(row.id)" class="w-[78px] h-[37px] text-[#74797C] bg-white border border-[#74797C] focus:outline-none hover:bg-[#F8F9FA] focus:ring-0 focus:ring-[#74797C] font-medium rounded-[4px] text-[14px] px-[16px] py-[8px] me-[8px]">{{ getButtonName(row.id)}}</button>
+                        <button type="button" @click="toggleDetails(row.id)" class="w-[78px] h-[37px] text-[#74797C] bg-white border border-[#74797C] focus:outline-none hover:bg-[#F8F9FA] focus:ring-0 focus:ring-[#74797C] font-medium rounded-[4px] text-[14px] px-[16px] py-[8px] me-[8px]">{{ getButtonName(row.id)}}</button>
                         <button type="button" @click="EditTransactions(row.id)" class="w-[58px] h-[37px] text-[#12B87C] bg-white border border-[#12B87C] focus:outline-none hover:bg-green-50 focus:ring-0 focus:ring-[#74797C] font-medium rounded-[4px] text-[14px] px-[16px] py-[8px]">Edit</button>
                     </div>
                 </td>
@@ -261,25 +261,25 @@ export default {
     methods: {
         async toggleDetails(rowId) {
             let token = localStorage.getItem('token');
-            this.selectedRowId = (this.selectedRowId === rowId) ? null : rowId; // Toggle the selectedRowId to disable other detail buttons
+            
+            if (this.expandedRows[0] === rowId) { // If the clicked row is already expanded, collapse it
+                this.expandedRows[0] = null;
+                return;
+            }
+            this.expandedRows[0] = rowId;  // Close any currently expanded row and expand the clicked row
             const response = await axios.get('transaction/' + rowId,{
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             });  //Get the transaction for the specific rowID
             this.value1[rowId] = response.data.data[0];  //Send this value for carbon emission calculations
-            const index = this.expandedRows.indexOf(rowId);
-            if (index === -1) {
-                this.expandedRows.push(rowId);  // Add row ID to expandedRows array if not present
-            } else {
-                this.expandedRows.splice(index, 1);  // Remove row ID if already present
-            }
+            
         },
         isHighlighted(rowId) {
-            return this.expandedRows.includes(rowId);  //To change settings when the row is expanded on click of details button
+            return this.expandedRows[0]==rowId;  //To change settings when the row is expanded on click of details button
         },
         getButtonName(rowId){
-            return this.expandedRows.includes(rowId) ? 'Close' : 'Details';  //Change the name of the details button 
+            return this.expandedRows[0]==rowId ? 'Close' : 'Details';  //Change the name of the details button 
         },
         carbonUpstream(rowId) {  //Calculate the carbon upstream value for the first bar chart
             if(this.value1[rowId].quantity!=null && this.value1[rowId].transaction_cdr_detail.carbon_intensity_upstream!=null){
@@ -295,9 +295,6 @@ export default {
         },
         carbonTotal(rowId){   //Calculate the total carbon value for the first bar chart
             return (this.carbonUpstream1 + this.carbonDownstream1).toFixed(3);
-        },
-        isButtonDisabled(rowId) {
-            return this.selectedRowId !== null && this.selectedRowId !== rowId; // Disable details button for other rows when one row is clicked
         },
         adjustPaginationAfterDelete() {
             if (this.currentPage > this.totalPages) {
