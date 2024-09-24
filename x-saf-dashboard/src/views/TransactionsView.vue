@@ -40,7 +40,7 @@
                     <div class="absolute inset-y-0 start-1 flex items-center ps-[12px] pointer-events-none">
                         <img class="w-[17.49px] h-[17.49px]" src="/public/images/search.svg" alt="image description">
                     </div>
-                    <input type="text" id="default-search" class="block w-[300px] h-[56px] rounded-[4px] py-[16px] pr-[12px] pl-[42px] font-medium bg-[#F8F9FA] border-[#DDDDDD] text-[16px] text-[#74797C] hover:bg-white active:bg-white focus:bg-white focus:border-none" placeholder="Search" />
+                    <input type="text" id="default-search" v-model="searchQuery" class="block w-[300px] h-[56px] rounded-[4px] py-[16px] pr-[12px] pl-[42px] font-medium bg-[#F8F9FA] border-[#DDDDDD] text-[16px] text-[#74797C] hover:bg-white active:bg-white focus:bg-white focus:border-none" placeholder="Search" />
                 </div>
             </form>
         </div>      
@@ -225,7 +225,7 @@
 
 <!--Pagination for TRANSACTION TABLE starts-->
     <nav class="flex items-center flex-column flex-wrap md:flex-row justify-between pt-[32px] px-[16px]" aria-label="Table navigation">
-        <span class="text-[14px] font-normal text-[#74797C] mb-4 md:mb-0 block w-full md:inline md:w-auto">Showing data {{showingData[0]}}-{{showingData[1]}} of {{items.length}} entries</span>
+        <span class="text-[14px] font-normal text-[#74797C] mb-4 md:mb-0 block w-full md:inline md:w-auto">Showing data {{showingData[0]}}-{{showingData[1]}} of {{filteredItems.length}} entries</span>
         <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8 gap-1">
             <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1" class="flex items-center justify-center px-[12px] py-[12px] h-[40px] w-[40px] leading-tight text-[#74797C] bg-white border border-[#74797C] hover:bg-white hover:text-[#74797C]"><img class="w-[14px] h-[14px]" src="/public/images/left_arrow.svg" alt="image description"></button>
             <button v-for="page in totalPages" :key="page" @click="changePage(page)" :class="{ active: currentPage === page }" class="flex items-center justify-center px-[12px] py-[12px] h-[40px] w-[40px] leading-tight text-[#74797C] bg-white border border-[#74797C] hover:bg-white hover:text-[#74797C]">{{ page }}</button>
@@ -312,8 +312,8 @@ export default {
             else{
                 this.showingData[1] = this.currentPage*this.itemsPerPage;
                 this.showingData[0] = this.showingData[1]-this.itemsPerPage+1;
-                if(this.showingData[1]>this.items.length){
-                    this.showingData[1] =this.items.length;
+                if(this.showingData[1]>this.filteredItems.length){
+                    this.showingData[1] =this.filteredItems.length;
                 }
             }
         },
@@ -381,9 +381,9 @@ export default {
                 );
         },
         pagination(){
-            if(this.items.length == 0){this.showingData[0] = 0;} else {this.showingData[0] = 1;}
-            if(this.items.length<this.itemsPerPage){
-                this.showingData[1] = this.items.length;
+            if(this.filteredItems.length == 0){this.showingData[0] = 0;} else {this.showingData[0] = 1;}
+            if(this.filteredItems.length < this.itemsPerPage){
+                this.showingData[1] = this.filteredItems.length;
             }
             else{
                 this.showingData[1] = this.itemsPerPage;
@@ -392,14 +392,14 @@ export default {
         changePage(page) {
             if (page >= 1 && page <= this.totalPages) {
                 this.currentPage = page;
-                if(page == 1){
+                if(page === 1){
                    this.pagination();
                 }
                 else{
-                    this.showingData[1] = page*this.itemsPerPage;
-                    this.showingData[0] = this.showingData[1]-this.itemsPerPage+1;
-                    if(this.showingData[1]>this.items.length){
-                        this.showingData[1] =this.items.length;
+                    this.showingData[1] = page * this.itemsPerPage;
+                    this.showingData[0] = this.showingData[1] - this.itemsPerPage + 1;
+                    if(this.showingData[1] > this.filteredItems.length){
+                        this.showingData[1] = this.filteredItems.length;
                     }
                 }
             }
@@ -411,7 +411,7 @@ export default {
             items: [],
             currentPage: 1,
             itemsPerPage: 7,
-            showingData: [],
+            showingData: [1, 7],
             selectedRows: [],
             selectedRowId: null, // Track the currently active row where detail button has been clicked
             deleteArr: [],
@@ -419,6 +419,7 @@ export default {
             value1: [],
             carbonDownstream1: 0,
             carbonUpstream1: 0,
+            searchQuery: '', // To store the search input value
         };
     },
     async created() {
@@ -454,16 +455,48 @@ export default {
         }
     },
     computed: {
+        filteredItems() {
+            if (this.searchQuery.trim() === '') {
+                return this.items; // Return all items if there's no search query
+            }
+
+            const searchQueryLower = this.searchQuery.toLowerCase();
+
+            return this.items.filter(item => {
+                const customerName = item.customer?.name?.toLowerCase() || '';  // Handle null/undefined
+                const purchaseDate = item.purchase_date?.toLowerCase() || '';    // Handle null/undefined
+                const deliveryDate = item.delivery_date?.toLowerCase() || '';    // Handle null/undefined
+                const quantity = String(item.quantity || '').toLowerCase();      // Handle null/undefined
+                const cdrProvider = item.transaction_cdr_detail?.cdr_provider?.toLowerCase() || '';  // Handle null/undefined
+                const trader = item.trader?.toLowerCase() || '';                 // Handle null/undefined
+
+                return (
+                    customerName.includes(searchQueryLower) ||
+                    purchaseDate.includes(searchQueryLower) ||
+                    deliveryDate.includes(searchQueryLower) ||
+                    quantity.includes(searchQueryLower) ||
+                    cdrProvider.includes(searchQueryLower) ||
+                    trader.includes(searchQueryLower)
+                );
+            });
+        },
         totalPages() {
-            return Math.ceil(this.items.length / this.itemsPerPage);
+            return Math.ceil(this.filteredItems.length / this.itemsPerPage);
         },
         paginatedItems() {
             const start = (this.currentPage - 1) * this.itemsPerPage;
-            return this.items.slice(start, start + this.itemsPerPage);
+            return this.filteredItems.slice(start, start + this.itemsPerPage);
         },
         allPageSelected() {
             return this.paginatedItems.length > 0 && this.paginatedItems.every(row => this.selectedRows.includes(row.id));
         }
+    },
+    watch: {
+        searchQuery() {
+            // Whenever the search query changes, reset the current page to 1
+            this.currentPage = 1;
+            this.pagination(); // Update showingData when search changes
+        },
     },
 };
 </script>

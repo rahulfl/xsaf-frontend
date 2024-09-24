@@ -25,7 +25,7 @@
                     <div class="absolute inset-y-0 start-1 flex items-center ps-[12px] pointer-events-none">
                         <img class="w-[17.49px] h-[17.49px]" src="/public/images/search.svg" alt="image description">
                     </div>
-                    <input type="text" id="default-search" class="block w-[300px] h-[56px] rounded-[4px] py-[16px] pr-[12px] pl-[42px] font-medium bg-[#F8F9FA] border-[#DDDDDD] text-[16px] text-[#74797C] hover:bg-white active:bg-white focus:bg-white focus:border-none" placeholder="Search" />
+                    <input type="text" id="default-search" v-model="searchQuery" class="block w-[300px] h-[56px] rounded-[4px] py-[16px] pr-[12px] pl-[42px] font-medium bg-[#F8F9FA] border-[#DDDDDD] text-[16px] text-[#74797C] hover:bg-white active:bg-white focus:bg-white focus:border-none" placeholder="Search" />
                 </div>
             </form>
         </div>      
@@ -67,7 +67,7 @@
                 </th>
                 
                 <th scope="col" class="font-medium py-3">
-                    <div class="text-[#EE506D] text-[14px] text-end font-medium font-Manrope">Delete selected (4)</div>
+                <!-- add delete selected here-->
                 </th>
             </tr>
         </thead>
@@ -91,9 +91,11 @@
                     {{customer.contact_person_name}}
                 </td>
                 
-                <td class="pr-[16px] py-[16px] pl-[24px] text-end inline-flex">
+                <td class="pr-[16px] py-[16px] pl-[24px] text-right">
+                <div class="inline-flex">
                     <button type="button" class="w-[78px] h-[37px] text-[#74797C] bg-white border border-[#74797C] focus:outline-none hover:bg-[#F8F9FA] focus:ring-0 focus:ring-[#74797C] font-medium rounded-[4px] text-[14px] px-[16px] py-[8px] me-[8px]">Details</button>
                     <button type="button" @click="EditCustomer(customer.id)" class="w-[58px] h-[37px] text-[#12B87C] bg-white border border-[#12B87C] focus:outline-none hover:bg-green-50 focus:ring-0 focus:ring-[#74797C] font-medium rounded-[4px] text-[14px] px-[16px] py-[8px]">Edit</button>
+                </div>
                 </td>
             </tr>
         </tbody>
@@ -102,7 +104,7 @@
 
 <!--Pagination starts-->
     <nav class="flex items-center flex-column flex-wrap md:flex-row justify-between pt-[32px] px-[16px]" aria-label="Table navigation">
-        <span class="text-[14px] font-normal text-[#74797C] mb-4 md:mb-0 block w-full md:inline md:w-auto">Showing data {{showingData[0]}}-{{showingData[1]}} of {{items.length}} entries</span>
+        <span class="text-[14px] font-normal text-[#74797C] mb-4 md:mb-0 block w-full md:inline md:w-auto">Showing data {{showingData[0]}}-{{showingData[1]}} of {{filteredItems.length}} entries</span>
         <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8 gap-1">
             <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1" class="flex items-center justify-center px-[12px] py-[12px] h-[40px] w-[40px] leading-tight text-[#74797C] bg-white border border-[#74797C] hover:bg-white hover:text-[#74797C]"><img class="w-[14px] h-[14px]" src="/public/images/left_arrow.svg" alt="image description"></button>
             <button v-for="page in totalPages" :key="page" @click="changePage(page)" :class="{ active: currentPage === page }" class="flex items-center justify-center px-[12px] py-[12px] h-[40px] w-[40px] leading-tight text-[#74797C] bg-white border border-[#74797C] hover:bg-white hover:text-[#74797C]">{{ page }}</button>
@@ -141,22 +143,22 @@ export default {
         changePage(page) {
             if (page >= 1 && page <= this.totalPages) {
                 this.currentPage = page;
-                if(page == 1){
+                if(page === 1){
                     this.pagination();
                 }
                 else{
-                    this.showingData[1] = page*this.itemsPerPage;
-                    this.showingData[0] = this.showingData[1]-this.itemsPerPage+1;
-                    if(this.showingData[1]>this.items.length){
-                        this.showingData[1] =this.items.length;
+                    this.showingData[1] = page * this.itemsPerPage;
+                    this.showingData[0] = this.showingData[1] - this.itemsPerPage + 1;
+                    if(this.showingData[1] > this.filteredItems.length){
+                        this.showingData[1] = this.filteredItems.length;
                     }
                 }
             }
         },
         pagination(){
-            if(this.items.length == 0){this.showingData[0] = 0;} else {this.showingData[0] = 1;}
-                if(this.items.length<this.itemsPerPage){
-                    this.showingData[1] = this.items.length;
+            if(this.filteredItems.length == 0){this.showingData[0] = 0;} else {this.showingData[0] = 1;}
+                if(this.filteredItems.length < this.itemsPerPage){
+                    this.showingData[1] = this.filteredItems.length;
                 }
                 else{
                     this.showingData[1] = this.itemsPerPage;
@@ -169,7 +171,8 @@ export default {
             items: [],
             currentPage: 1,
             itemsPerPage: 7,
-            showingData: []
+            showingData: [1,7],
+            searchQuery: '', // To store the search input value
         };
     },
     async created() {
@@ -203,12 +206,40 @@ export default {
         }
     },
     computed: {
+        filteredItems() {
+            if (this.searchQuery.trim() === '') {
+            return this.items; // Return all items if there's no search query
+            }
+
+            const searchQueryLower = this.searchQuery.toLowerCase();
+
+            return this.items.filter(item => {
+                const name = item.name?.toLowerCase() || '';  // Handle null/undefined
+                const email = item.email?.toLowerCase() || '';    // Handle null/undefined
+                const phoneNo = item.phone_no?.toLowerCase() || '';    // Handle null/undefined
+                const contactPersonName = item.contact_person_name?.toLowerCase() || '';    // Handle null/undefined
+               
+                return (
+                    name.includes(searchQueryLower) ||
+                    email.includes(searchQueryLower) ||
+                    phoneNo.includes(searchQueryLower) ||
+                    contactPersonName.includes(searchQueryLower)
+                );
+            });
+        },
         totalPages() {
-        return Math.ceil(this.items.length / this.itemsPerPage);
+            return Math.ceil(this.filteredItems.length / this.itemsPerPage);
         },
         paginatedItems() {
-        const start = (this.currentPage - 1) * this.itemsPerPage;
-        return this.items.slice(start, start + this.itemsPerPage);
+            const start = (this.currentPage - 1) * this.itemsPerPage;
+            return this.filteredItems.slice(start, start + this.itemsPerPage);
+        },
+    },
+    watch: {
+        searchQuery() {
+            // Whenever the search query changes, reset the current page to 1
+            this.currentPage = 1;
+            this.pagination(); // Update showingData when search changes
         },
     },
 };
